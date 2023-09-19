@@ -3,7 +3,6 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   exclude:
     - test/**
-    - lib/ui/**
 
   errors:
     todo: ignore

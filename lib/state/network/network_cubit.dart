@@ -1,25 +1,29 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
+import 'package:nytimes/modal/article.dart';
+import 'package:nytimes/modal/article_listing_content_type.dart';
+import 'package:nytimes/modal/failure_response.dart';
+import 'package:nytimes/service/article_store.dart';
 import 'package:nytimes/state/network/network_state.dart';
 
 class NetworkCubit extends Cubit<NetworkState> {
-  NetworkCubit() : super(const UnknownNetworkState()) {
+  NetworkCubit({required this.articleStore})
+      : super(const UnknownNetworkState()) {
     connectivityStreamSubscription = _connectivity.onConnectivityChanged
         .listen((ConnectivityResult connectivityResult) async {
       if (connectivityResult == ConnectivityResult.none) {
         emitNetworkDisconnectedState();
       } else {
         if (state is! UnknownNetworkState) {
-          await GetIt.instance<CheckApiStatusUseCase>()(
-            isConnected: () {
-              emitNetworkConnectedState();
-            },
-            isServerNotReachable: () {
-              emitServerUnreachableState();
-            },
+          final Either<FailureResponse, List<Article>> result =
+              await articleStore
+                  .fetchArticles(ArticleListingContentType.mostEmailed);
+          result.fold<void>(
+            (FailureResponse failureResponse) => false,
+            (List<Article> inspection) => true,
           );
         } else {
           emitNetworkConnectedState();
@@ -28,6 +32,7 @@ class NetworkCubit extends Cubit<NetworkState> {
     });
   }
 
+  final ArticleStore articleStore;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> connectivityStreamSubscription;
 

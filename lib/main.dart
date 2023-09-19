@@ -15,10 +15,5 @@ void main({BaseConfig? baseConfig}) async {
 
   Bloc.observer = CubitObserver();
 
-  await run(config);
-}
-
-Future<void> run(BaseConfig baseConfig) async {
-  runApp(AppConfigProvider(
-      appConfig: baseConfig, child: CoreApp(config: baseConfig)));
+  runApp(AppConfigProvider(appConfig: config, child: CoreApp(config: config)));
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nytimes/config/base_config.dart';
 import 'package:nytimes/config/stylesheet/app_theme.dart';
-import 'package:nytimes/ui/route/routes_manager.dart';
+import 'package:nytimes/ui/route/route_manager.dart';
 
 class AppConfig extends BaseConfig {
   @override
@@ -10,7 +10,7 @@ class AppConfig extends BaseConfig {
   @override
   Map<String, String> endpoints() => <String, String>{
         'baseUrl': const String.fromEnvironment('BASE_URL',
-            defaultValue: 'https://newh-sqa1.ocs-support.com/')
+            defaultValue: 'https://api.nytimes.com/svc/')
       };
 
   @override
@@ -20,8 +20,7 @@ class AppConfig extends BaseConfig {
       ];
 
   @override
-  Route<dynamic> routeFactory(RouteSettings settings) =>
-      routesManager(settings);
+  Route<dynamic> routeFactory(RouteSettings settings) => routeManager(settings);
 
   @override
   ThemeData lightTheme() {

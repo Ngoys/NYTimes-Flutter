@@ -12,6 +12,7 @@ class LandingScreen extends StatelessWidget {
         centerTitle: true,
         title: const Text('New York Times'),
       ),
+      body: const Center(child: Text('Hello World')),
     );
   }
 }

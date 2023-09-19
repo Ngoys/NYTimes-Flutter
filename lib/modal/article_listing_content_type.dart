@@ -1,4 +1,8 @@
-enum ArticleListingContentType { mostViewed, mostShared, mostEmailed }
+enum ArticleListingContentType {
+  mostViewed,
+  mostShared,
+  mostEmailed,
+}
 
 extension ArticleListingContentTypeExtension on ArticleListingContentType {
   String get name {

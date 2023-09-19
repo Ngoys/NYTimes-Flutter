@@ -5,7 +5,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nytimes/config/base_config.dart';
 import 'package:nytimes/generated/app_localizations.dart';
+import 'package:nytimes/service/article_store.dart';
 import 'package:nytimes/service/geolocation_store.dart';
+import 'package:nytimes/state/network/network_cubit.dart';
 import 'package:nytimes/ui/landing/landing_screen.dart';
 import 'package:nytimes/utils/app_navigator_observer.dart';
 import 'package:nytimes/utils/context_extension.dart';
@@ -44,7 +46,11 @@ class _CoreAppState extends State<CoreApp> with WidgetsBindingObserver {
     final BaseConfig baseConfig = context.config;
 
     return MultiBlocProvider(
-      providers: const <BlocProvider<dynamic>>[],
+      providers: <BlocProvider<dynamic>>[
+        BlocProvider<NetworkCubit>(
+            create: (BuildContext context) =>
+                NetworkCubit(articleStore: GetIt.instance<ArticleStore>())),
+      ],
       child: MaterialApp(
           scaffoldMessengerKey: snackBarKey,
           navigatorObservers: <NavigatorObserver>[AppNavigatorObserver()],

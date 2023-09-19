@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nytimes/ui/login/LandingScreen';
+import 'package:nytimes/ui/landing/landing_screen.dart';
 
-Route<dynamic> routesManager(RouteSettings settings) {
+Route<dynamic> routeManager(RouteSettings settings) {
   late Widget screen;
   late List<BlocProvider<dynamic>> blocProviderList;
 

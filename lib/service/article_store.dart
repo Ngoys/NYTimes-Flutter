@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nytimes/modal/api_response.dart';
 import 'package:nytimes/modal/article.dart';
 import 'package:nytimes/modal/article_listing_content_type.dart';
 import 'package:nytimes/modal/failure_response.dart';
@@ -13,11 +14,11 @@ import 'package:nytimes/service/remote/api/api_error_handler.dart';
 
 @lazySingleton
 class ArticleStore {
-  ArticleStore({required this.apiClient});
+  ArticleStore({required APIClient apiClient}) : _apiClient = apiClient;
 
-  final APIClient apiClient;
+  final APIClient _apiClient;
 
-  Future<Either<FailureResponse, Article>> fetchArticles(
+  Future<Either<FailureResponse, List<Article>>> fetchArticles(
       ArticleListingContentType articleListingContentType) async {
     String endPoint = '';
 
@@ -32,17 +33,18 @@ class ArticleStore {
 
     try {
       final Response<dynamic> response =
-          await apiClient.appDio.mainDio.get<dynamic>(endPoint);
+          await _apiClient.appDio.mainDio.get<dynamic>(endPoint);
       if (response.statusCode != 200) {
-        return Left<FailureResponse, Article>(FailureResponse(
+        return Left<FailureResponse, List<Article>>(FailureResponse(
             code: response.statusCode.toString(),
             error: response.statusCode.toString()));
       } else {
-        return Right<FailureResponse, Article>(Article.fromJson(response.data));
+        return Right<FailureResponse, List<Article>>(
+            APIResponse<List<Article>>.fromJson(response.data).response);
       }
     } on DioException catch (ex) {
       developer.log(ex.message ?? '');
-      return Left<FailureResponse, Article>(ex.processError());
+      return Left<FailureResponse, List<Article>>(ex.processError());
     }
   }
 }
