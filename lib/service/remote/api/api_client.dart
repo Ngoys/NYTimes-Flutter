@@ -5,13 +5,13 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nytimes/modal/auth_response.dart';
-import 'package:nytimes/service/remote/api/api_service.dart';
+import 'package:nytimes/service/remote/api/base_dio.dart';
 import 'package:nytimes/service/user_store.dart';
 import 'package:nytimes/utils/constants.dart';
 
-@singleton
-class EndpointProvider {
-  EndpointProvider(this.baseDio, this.userStore) {
+@lazySingleton
+class APIClient {
+  APIClient(this.baseDio, this.userStore) {
     // Add MainDioInterceptors to the main dio
     final bool dioHasInterceptors = baseDio.mainDio.interceptors
         .any((Interceptor interceptor) => interceptor is MainDioInterceptors);
@@ -30,16 +30,16 @@ class EndpointProvider {
 }
 
 class MainDioInterceptors extends InterceptorsWrapper {
-  MainDioInterceptors(this.dio, this.authStorageService);
+  MainDioInterceptors(this.dio, this.userStore);
 
-  final UserStore authStorageService;
+  final UserStore userStore;
   final Dio dio;
 
   @override
   Future<void> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     // Add auth
-    final AuthResponse? auth = await authStorageService.getAuthData();
+    final AuthResponse? auth = await userStore.getAuthData();
     options.headers.remove('Authorization');
     if (auth != null) {
       options.headers['Authorization'] = 'Bearer ${auth.accessToken}';
@@ -65,7 +65,7 @@ class MainDioInterceptors extends InterceptorsWrapper {
         '\nPATH => ${err.requestOptions.path} \nBody => ${err.response}');
 
     if (err.response?.statusCode == 403) {
-      await authStorageService.deleteAuthData();
+      await userStore.deleteAuthData();
       return handler.reject(err);
     }
 
@@ -73,7 +73,7 @@ class MainDioInterceptors extends InterceptorsWrapper {
       final RequestOptions options = err.requestOptions;
       if ((options.headers['retry_count'] ?? 0) >= maxRetryCount) {
         // The user is required to login
-        await authStorageService.deleteAuthData();
+        await userStore.deleteAuthData();
         return handler.reject(err..response?.statusCode = 403);
       }
 
@@ -104,7 +104,7 @@ class MainDioInterceptors extends InterceptorsWrapper {
     rOptions.headers['retry_count'] =
         (rOptions.headers['retry_count'] ?? 0) + 1;
 
-    final AuthResponse? auth = await authStorageService.getAuthData();
+    final AuthResponse? auth = await userStore.getAuthData();
     rOptions.headers.remove('Authorization');
     if (auth != null) {
       rOptions.headers['Authorization'] = 'Bearer ${auth.accessToken}';
@@ -127,8 +127,7 @@ class MainDioInterceptors extends InterceptorsWrapper {
       final dynamic response = await dio.post<dynamic>(
         'token',
         data: <String, dynamic>{
-          'refresh_token':
-              (await authStorageService.getAuthData())?.refreshToken,
+          'refresh_token': (await userStore.getAuthData())?.refreshToken,
         },
         options: Options(
           contentType: Headers.formUrlEncodedContentType,
@@ -137,9 +136,9 @@ class MainDioInterceptors extends InterceptorsWrapper {
 
       final AuthResponse auth =
           AuthResponse.fromJson(json.decode(response.toString()));
-      await authStorageService.saveAuthData(auth);
+      await userStore.saveAuthData(auth);
     } on DioException {
-      await authStorageService.deleteAuthData();
+      await userStore.deleteAuthData();
     }
   }
 }

@@ -10,9 +10,6 @@ void main({BaseConfig? baseConfig}) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final BaseConfig config = baseConfig ?? AppConfig();
-
-  const String baseUrl = config.endpoints()['baseUrl']!;
-
   Bloc.observer = CubitObserver();
   await run(config);
 }
