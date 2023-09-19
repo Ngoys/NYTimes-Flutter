@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
@@ -11,17 +10,17 @@ import 'package:nytimes/utils/constants.dart';
 
 @lazySingleton
 class APIClient {
-  APIClient(this.baseDio, this.userStore) {
+  APIClient(this.appDio, this.userStore) {
     // Add MainDioInterceptors to the main dio
-    final bool dioHasInterceptors = baseDio.mainDio.interceptors
+    final bool dioHasInterceptors = appDio.mainDio.interceptors
         .any((Interceptor interceptor) => interceptor is MainDioInterceptors);
-    if (!dioHasInterceptors) {
-      baseDio.mainDio.interceptors
-          .add(MainDioInterceptors(baseDio.mainDio, userStore));
+    if (dioHasInterceptors == false) {
+      appDio.mainDio.interceptors
+          .add(MainDioInterceptors(appDio.mainDio, userStore));
     }
   }
 
-  final BaseDio baseDio;
+  final AppDio appDio;
   final UserStore userStore;
 
   Options authOptions = Options(
@@ -39,15 +38,18 @@ class MainDioInterceptors extends InterceptorsWrapper {
   Future<void> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     // Add auth
-    final AuthResponse? auth = await userStore.getAuthData();
-    options.headers.remove('Authorization');
-    if (auth != null) {
-      options.headers['Authorization'] = 'Bearer ${auth.accessToken}';
-    }
+    // final AuthResponse? auth = await userStore.getAuthData();
+    // options.headers.remove('Authorization');
+    // if (auth != null) {
+    //   options.headers['Authorization'] = 'Bearer ${auth.accessToken}';
+    // }
+
+    options.queryParameters.removeWhere((key, value) => key == 'api-key');
+    options.queryParameters['api-key'] = apiKey;
 
     // Add local
-    options.headers[HttpHeaders.acceptLanguageHeader] =
-        Platform.localeName.substring(0, 2);
+    // options.headers[HttpHeaders.acceptLanguageHeader] =
+    // Platform.localeName.substring(0, 2);
 
     developer.log(
         name: 'REQUEST: ${options.method}',

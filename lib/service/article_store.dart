@@ -1,48 +1,48 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer' as developer;
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nytimes/modal/article.dart';
+import 'package:nytimes/modal/article_listing_content_type.dart';
 import 'package:nytimes/modal/failure_response.dart';
+import 'package:nytimes/service/remote/api/api_client.dart';
 import 'package:nytimes/service/remote/api/api_error_handler.dart';
 
 @lazySingleton
-class UserStore {
-  UserStore({required this.secureStorage});
+class ArticleStore {
+  ArticleStore({required this.apiClient});
 
-  final FlutterSecureStorage secureStorage;
+  final APIClient apiClient;
 
-  Future<Either<FailureResponse, Article>>
-      getInspectionTypes(String? eTag) async {
+  Future<Either<FailureResponse, Article>> fetchArticles(
+      ArticleListingContentType articleListingContentType) async {
+    String endPoint = '';
+
+    switch (articleListingContentType) {
+      case ArticleListingContentType.mostEmailed:
+        endPoint = 'mostpopular/v2/emailed/1.json';
+      case ArticleListingContentType.mostShared:
+        endPoint = 'mostpopular/v2/shared/1/facebook.json';
+      case ArticleListingContentType.mostViewed:
+        endPoint = 'mostpopular/v2/viewed/7.json';
+    }
+
     try {
-      final Response<dynamic> response = await baseDio.mainDio.get<dynamic>(
-        inspectionTypesUrl,
-        options: Options(
-          contentType: Headers.jsonContentType,
-          headers: <String, dynamic>{HttpHeaders.ifNoneMatchHeader: eTag},
-        ),
-      );
+      final Response<dynamic> response =
+          await apiClient.appDio.mainDio.get<dynamic>(endPoint);
       if (response.statusCode != 200) {
-        return Left<FailureResponse, Article>(
-            FailureResponse(
-                code: response.statusCode.toString(),
-                error: response.statusCode.toString()));
+        return Left<FailureResponse, Article>(FailureResponse(
+            code: response.statusCode.toString(),
+            error: response.statusCode.toString()));
       } else {
-        return Right<FailureResponse, Article>(
-            Article(
-          eTag: response.headers.value(HttpHeaders.etagHeader),
-          inspectionTypes: jsonEncode(response.data),
-        ));
-      }Art
+        return Right<FailureResponse, Article>(Article.fromJson(response.data));
+      }
     } on DioException catch (ex) {
       developer.log(ex.message ?? '');
-      return Left<FailureResponse, Article>(
-          ex.processError());
+      return Left<FailureResponse, Article>(ex.processError());
     }
   }
 }

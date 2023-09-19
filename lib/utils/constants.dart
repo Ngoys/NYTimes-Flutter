@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 // MARK: - API
 //----------------------------------------
 
+const String apiKey = 'aBBpWBWdHveK5y5w9Cbln7kci0vNiT0g';
+
 const String contentType = 'application/x-www-form-urlencoded';
 const String contentTypeForLogout = 'application/xml';
 const String cacheControl = 'no-cache';

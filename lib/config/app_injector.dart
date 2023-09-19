@@ -10,6 +10,6 @@ final GetIt getIt = GetIt.instance;
 Future<void> configureDependencies(BaseConfig config) async {
   getIt
     ..init()
-    ..registerSingleton<BaseDio>(
-        BaseDio(baseUrl: config.endpoints()['baseUrl']!));
+    ..registerSingleton<AppDio>(
+        AppDio(baseUrl: config.endpoints()['baseUrl']!));
 }

@@ -29,12 +29,12 @@ extension GetItInjectableX on _i1.GetIt {
       environmentFilter,
     );
     final apiService = _$ApiService();
-    gh.singleton<_i3.BaseDio>(apiService.init());
+    gh.singleton<_i3.AppDio>(apiService.init());
     gh.lazySingleton<_i4.GeoLocationStore>(() => _i4.GeoLocationStore());
     gh.lazySingleton<_i5.UserStore>(
         () => _i5.UserStore(secureStorage: gh<_i6.FlutterSecureStorage>()));
     gh.singleton<_i7.BaseStore>(_i7.BaseStore(
-      gh<_i3.BaseDio>(),
+      gh<_i3.AppDio>(),
       gh<_i5.UserStore>(),
     ));
     return this;

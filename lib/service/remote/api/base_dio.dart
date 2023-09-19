@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:nytimes/utils/constants.dart';
 
-class BaseDio {
-  BaseDio({required String baseUrl}) {
+class AppDio {
+  AppDio({required String baseUrl}) {
     mainDio = Dio()
       ..options = BaseOptions(
         headers: <String, String>{'cache-control': cacheControl},
