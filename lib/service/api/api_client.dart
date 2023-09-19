@@ -4,7 +4,7 @@ import 'dart:developer' as developer;
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nytimes/modal/auth_response.dart';
-import 'package:nytimes/service/remote/api/base_dio.dart';
+import 'package:nytimes/service/api/base_dio.dart';
 import 'package:nytimes/service/user_store.dart';
 import 'package:nytimes/utils/constants.dart';
 

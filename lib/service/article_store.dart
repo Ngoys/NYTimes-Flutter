@@ -9,8 +9,8 @@ import 'package:nytimes/modal/api_response.dart';
 import 'package:nytimes/modal/article.dart';
 import 'package:nytimes/modal/article_listing_content_type.dart';
 import 'package:nytimes/modal/failure_response.dart';
-import 'package:nytimes/service/remote/api/api_client.dart';
-import 'package:nytimes/service/remote/api/api_error_handler.dart';
+import 'package:nytimes/service/api/api_client.dart';
+import 'package:nytimes/service/api/api_error_handler.dart';
 
 @lazySingleton
 class ArticleStore {
