@@ -10,8 +10,9 @@ import 'package:nytimes/service/article_store.dart';
 import 'package:nytimes/state/network/network_state.dart';
 
 class NetworkCubit extends Cubit<NetworkState> {
-  NetworkCubit({required this.articleStore})
-      : super(const UnknownNetworkState()) {
+  NetworkCubit({required ArticleStore articleStore})
+      : _articleStore = articleStore,
+        super(const UnknownNetworkState()) {
     connectivityStreamSubscription = _connectivity.onConnectivityChanged
         .listen((ConnectivityResult connectivityResult) async {
       if (connectivityResult == ConnectivityResult.none) {
@@ -19,7 +20,7 @@ class NetworkCubit extends Cubit<NetworkState> {
       } else {
         if (state is! UnknownNetworkState) {
           final Either<FailureResponse, List<Article>> result =
-              await articleStore
+              await _articleStore
                   .fetchArticles(ArticleListingContentType.mostEmailed);
           result.fold<void>(
             (FailureResponse failureResponse) => false,
@@ -32,7 +33,7 @@ class NetworkCubit extends Cubit<NetworkState> {
     });
   }
 
-  final ArticleStore articleStore;
+  final ArticleStore _articleStore;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> connectivityStreamSubscription;
 
