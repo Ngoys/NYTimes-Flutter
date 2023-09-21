@@ -31,3 +31,9 @@ const Key appOverlayKeyOkButton = Key('AppOverlay_ActionOkKey');
 const Key appOverlayKeyAlertDialog = Key('AppOverlay_AlertDialog');
 const Key appOverlayKeyLoadingIndicator = Key('AppOverlay_LoadingIndicatorKey');
 const Key appOverlayKeyLoadingMessage = Key('AppOverlay_LoadingMessageKey');
+
+//----------------------------------------
+// MARK: - Navigation Parameter
+//----------------------------------------
+
+const String NAV_SHOULD_PUSH_ANIMATION = 'nav-should-push-animation';

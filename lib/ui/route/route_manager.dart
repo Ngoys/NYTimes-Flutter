@@ -6,12 +6,16 @@ import 'package:nytimes/state/article_listing/article_listing_cubit.dart';
 import 'package:nytimes/ui/article_listing/article_listing_screen.dart';
 import 'package:nytimes/ui/home/home_screen.dart';
 import 'package:nytimes/ui/landing/landing_screen.dart';
+import 'package:nytimes/ui/route/no_animation_page_route.dart';
+import 'package:nytimes/utils/constants.dart';
 import 'package:nytimes/widget/app_overlays.dart';
 
 Route<dynamic> routeManager(RouteSettings settings) {
   late Widget screen;
   late List<BlocProvider<dynamic>> blocProviderList;
   final GetIt getIt = GetIt.instance;
+  final Map<String, dynamic>? arguments =
+      settings.arguments as Map<String, dynamic>?;
 
   switch (settings.name) {
     case LandingScreen.route:
@@ -34,12 +38,22 @@ Route<dynamic> routeManager(RouteSettings settings) {
       throw Exception('This route name does not exist');
   }
 
-  return MaterialPageRoute<dynamic>(
-      builder: (BuildContext context) {
-        return AppOverlay(
-          blocProviderList: blocProviderList,
-          child: screen,
-        );
-      },
-      settings: settings);
+  final Widget widget = AppOverlay(
+    blocProviderList: blocProviderList,
+    child: screen,
+  );
+
+  if (arguments?[NAV_SHOULD_PUSH_ANIMATION] == false) {
+    return NoAnimationPageRoute<dynamic>(
+        builder: (BuildContext context) {
+          return widget;
+        },
+        settings: settings);
+  } else {
+    return MaterialPageRoute<dynamic>(
+        builder: (BuildContext context) {
+          return widget;
+        },
+        settings: settings);
+  }
 }
