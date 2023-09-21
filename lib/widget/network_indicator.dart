@@ -18,8 +18,8 @@ class NetworkIndicatorWidget extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(4),
             color: state is NetworkConnectedState
-                ? AppColor.kellyGreen
-                : AppColor.uaRed,
+                ? Colors.lightGreenAccent
+                : Colors.redAccent,
             child: SafeArea(
               top: false,
               child: Center(

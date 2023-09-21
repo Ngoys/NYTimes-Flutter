@@ -1,8 +1,6 @@
 import 'dart:ui';
 
-class AppColor {
-  AppColor._();
-
+extension AppColor on Color {
   static Color get primaryBlue => const Color(0xFF006B58);
 
   static Color get lightBlue => const Color(0xFFD6ECF6);
