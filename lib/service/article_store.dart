@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:developer' as developer;
-import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -39,8 +38,15 @@ class ArticleStore {
             code: response.statusCode.toString(),
             error: response.statusCode.toString()));
       } else {
-        return Right<FailureResponse, List<Article>>(
-            APIResponse<List<Article>>.fromJson(response.data).response);
+        final NYTimesAPIResult<List<Article>> apiResult =
+            NYTimesAPIResult<List<Article>>.fromJson(
+          response.data,
+          (dynamic json) => (json as List<dynamic>)
+              .map((dynamic item) => Article.fromJson(item))
+              .toList(),
+        );
+
+        return Right<FailureResponse, List<Article>>(apiResult.results);
       }
     } on DioException catch (ex) {
       developer.log(ex.message ?? '');

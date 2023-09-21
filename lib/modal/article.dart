@@ -6,7 +6,7 @@ class Article {
   });
 
   Article.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = json['id'].toString();
     title = json['title'];
     publishedDate = DateTime.parse(json['published_date']);
   }

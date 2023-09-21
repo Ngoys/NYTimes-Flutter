@@ -23,8 +23,8 @@ class NetworkCubit extends Cubit<NetworkState> {
               await _articleStore
                   .fetchArticles(ArticleListingContentType.mostEmailed);
           result.fold<void>(
-            (FailureResponse failureResponse) => false,
-            (List<Article> inspection) => true,
+            (FailureResponse failureResponse) => emitNetworkDisconnectedState(),
+            (List<Article> inspection) => emitNetworkConnectedState(),
           );
         } else {
           emitNetworkConnectedState();

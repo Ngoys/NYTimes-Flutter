@@ -1,17 +1,21 @@
-class APIResponse<T> {
-  APIResponse({
+class NYTimesAPIResult<T> {
+  NYTimesAPIResult({
     required this.status,
     required this.copyright,
-    required this.response,
+    required this.numberOfResults,
+    required this.results,
   });
 
-  APIResponse.fromJson(Map<String, dynamic> json) {
+  NYTimesAPIResult.fromJson(
+      Map<String, dynamic> json, T Function(dynamic) fromJson) {
     status = json['status'];
     copyright = json['copyright'];
-    response = json['published_date'] as T;
+    numberOfResults = json['num_results'];
+    results = fromJson(json['results']);
   }
 
   late final String status;
   late final String copyright;
-  late final T response;
+  late final int numberOfResults;
+  late final T results;
 }
