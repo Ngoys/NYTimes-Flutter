@@ -6,7 +6,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
-import 'app_localizations_es.dart';
 
 /// Callers can lookup localized strings with an instance of AppLocalization
 /// returned by `AppLocalization.of(context)`.
@@ -89,8 +88,7 @@ abstract class AppLocalization {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
-    Locale('en'),
-    Locale('es')
+    Locale('en')
   ];
 
   /// No description provided for @titleLandingScreen.
@@ -98,6 +96,12 @@ abstract class AppLocalization {
   /// In en, this message translates to:
   /// **'Get Started'**
   String get titleLandingScreen;
+
+  /// No description provided for @titleHomeScreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get titleHomeScreen;
 
   /// No description provided for @actionEnable.
   ///
@@ -127,7 +131,7 @@ class _AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en', 'es'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationDelegate old) => false;
@@ -139,7 +143,6 @@ AppLocalization lookupAppLocalization(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'en': return AppLocalizationEn();
-    case 'es': return AppLocalizationEs();
   }
 
   throw FlutterError(

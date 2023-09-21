@@ -8,6 +8,9 @@ class AppLocalizationEn extends AppLocalization {
   String get titleLandingScreen => 'Get Started';
 
   @override
+  String get titleHomeScreen => 'Home';
+
+  @override
   String get actionEnable => 'Enable';
 
   @override

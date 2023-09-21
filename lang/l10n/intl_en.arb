@@ -1,6 +1,7 @@
 {
   "@@locale": "en",
   "titleLandingScreen": "Get Started",
+  "titleHomeScreen": "Home",
   "actionEnable": "Enable",
   "labelOfflineMode": "Offline Mode",
   "labelOnlineMode": "Online Mode"

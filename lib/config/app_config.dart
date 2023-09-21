@@ -16,7 +16,6 @@ class AppConfig extends BaseConfig {
   @override
   List<Locale> locales() => <Locale>[
         const Locale.fromSubtags(languageCode: 'en', countryCode: 'US'),
-        const Locale.fromSubtags(languageCode: 'es', countryCode: 'ES'),
       ];
 
   @override
