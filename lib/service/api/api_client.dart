@@ -44,7 +44,8 @@ class MainDioInterceptors extends InterceptorsWrapper {
     //   options.headers['Authorization'] = 'Bearer ${auth.accessToken}';
     // }
 
-    options.queryParameters.removeWhere((key, value) => key == 'api-key');
+    options.queryParameters
+        .removeWhere((String key, dynamic value) => key == 'api-key');
     options.queryParameters['api-key'] = apiKey;
 
     // Add local

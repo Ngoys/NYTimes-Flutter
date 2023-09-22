@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:nytimes/modal/home_menu.dart';
+import 'package:nytimes/utils/context_extension.dart';
 
 class HomeMenuSection extends Equatable {
   const HomeMenuSection({
@@ -10,7 +12,7 @@ class HomeMenuSection extends Equatable {
   final List<HomeMenu> menus;
 
   @override
-  List<Object?> get props => [type, menus];
+  List<Object?> get props => <Object?>[type, menus];
 }
 
 enum HomeMenuSectionType {
@@ -20,16 +22,14 @@ enum HomeMenuSectionType {
 }
 
 extension HomeMenuSectionTypeExtension on HomeMenuSectionType {
-  String get name {
+  String getName(BuildContext context) {
     switch (this) {
       case HomeMenuSectionType.search:
-        return 'Search';
-
+        return context.localization.homeMenuSearchTitle;
       case HomeMenuSectionType.popular:
-        return 'Popular';
-
+        return context.localization.homeMenuPopularTitle;
       case HomeMenuSectionType.location:
-        return 'Location';
+        return context.localization.homeMenuLocationTitle;
     }
   }
 }

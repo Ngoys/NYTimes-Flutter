@@ -35,6 +35,7 @@ class LocationCubit extends Cubit<LocationState> {
           emit(const LocationDisabledState());
           break;
         case ServiceStatus.enabled:
+          subscribeToLocationUpdate();
           break;
       }
     });
@@ -42,6 +43,21 @@ class LocationCubit extends Cubit<LocationState> {
 
   Future<bool> isLocationServiceEnabled() async {
     return Geolocator.isLocationServiceEnabled();
+  }
+
+  Future<void> requestLocationPermission() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    switch (permission) {
+      case LocationPermission.denied:
+        permission = await Geolocator.requestPermission();
+        break;
+      case LocationPermission.deniedForever:
+        emit(const LocationDisabledState());
+        break;
+      default:
+        break;
+    }
   }
 
   Future<bool> openLocationSettings() async {

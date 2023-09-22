@@ -8,7 +8,7 @@ class AppLocalizationEn extends AppLocalization {
   String get titleLandingScreen => 'Get Started';
 
   @override
-  String get titleHomeScreen => 'Home';
+  String get titleHomeScreen => 'New York Times';
 
   @override
   String get actionEnable => 'Enable';
@@ -18,4 +18,25 @@ class AppLocalizationEn extends AppLocalization {
 
   @override
   String get labelOnlineMode => 'Online Mode';
+
+  @override
+  String get homeMenuSearchTitle => 'Search';
+
+  @override
+  String get homeMenuPopularTitle => 'Popular';
+
+  @override
+  String get homeMenuLocationTitle => 'Location';
+
+  @override
+  String get homeMenuSearchArticleTitle => 'Search Articles';
+
+  @override
+  String get homeMenuMostViewedTitle => 'Most Viewed';
+
+  @override
+  String get homeMenuMostSharedTitle => 'Most Shared';
+
+  @override
+  String get homeMenuMostEmailedTitle => 'Most Emailed';
 }

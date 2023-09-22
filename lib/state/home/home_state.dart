@@ -20,3 +20,7 @@ class HomeLoadedState extends HomeState {
   @override
   List<Object> get props => <Object>[sections];
 }
+
+class HomeIsLoadingState extends HomeState {
+  const HomeIsLoadingState();
+}

@@ -1,28 +1,43 @@
-enum HomeMenu {
-  searchArticle,
-  mostViewed,
-  mostShared,
-  mostEmailed,
-  location,
-}
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:nytimes/utils/context_extension.dart';
 
-extension HomeMenuExtension on HomeMenu {
-  String get name {
-    switch (this) {
-      case HomeMenu.searchArticle:
-        return 'Search Articles';
+class HomeMenu {
+  const HomeMenu(this.key, {this.position});
+  final String key;
+  final Position? position;
 
-      case HomeMenu.mostViewed:
-        return 'Most Viewed';
+  static const String _searchArticleKey = 'searchArticle';
+  static const String _mostViewedKey = 'mostViewed';
+  static const String _mostSharedKey = 'mostShared';
+  static const String _mostEmailedKey = 'mostEmailed';
+  static const String _locationKey = 'location';
 
-      case HomeMenu.mostShared:
-        return 'Most Shared';
+  static const HomeMenu searchArticle = HomeMenu(_searchArticleKey);
+  static const HomeMenu mostViewed = HomeMenu(_mostViewedKey);
+  static const HomeMenu mostShared = HomeMenu(_mostSharedKey);
+  static const HomeMenu mostEmailed = HomeMenu(_mostEmailedKey);
+  // ignore: prefer_constructors_over_static_methods
+  static HomeMenu location(Position position) {
+    return HomeMenu(_locationKey, position: position);
+  }
 
-      case HomeMenu.mostEmailed:
-        return 'Most Emailed';
-
-      case HomeMenu.location:
-        return 'Location';
+  String getName(BuildContext context) {
+    switch (key) {
+      case _searchArticleKey:
+        return context.localization.homeMenuSearchArticleTitle;
+      case _mostViewedKey:
+        return context.localization.homeMenuMostViewedTitle;
+      case _mostSharedKey:
+        return context.localization.homeMenuMostSharedTitle;
+      case _mostEmailedKey:
+        return context.localization.homeMenuMostEmailedTitle;
+      case _locationKey:
+        if (position != null) {
+          return '$position';
+        }
+        break;
     }
+    return '';
   }
 }

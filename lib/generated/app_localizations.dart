@@ -100,7 +100,7 @@ abstract class AppLocalization {
   /// No description provided for @titleHomeScreen.
   ///
   /// In en, this message translates to:
-  /// **'Home'**
+  /// **'New York Times'**
   String get titleHomeScreen;
 
   /// No description provided for @actionEnable.
@@ -120,6 +120,48 @@ abstract class AppLocalization {
   /// In en, this message translates to:
   /// **'Online Mode'**
   String get labelOnlineMode;
+
+  /// No description provided for @homeMenuSearchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get homeMenuSearchTitle;
+
+  /// No description provided for @homeMenuPopularTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular'**
+  String get homeMenuPopularTitle;
+
+  /// No description provided for @homeMenuLocationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get homeMenuLocationTitle;
+
+  /// No description provided for @homeMenuSearchArticleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Articles'**
+  String get homeMenuSearchArticleTitle;
+
+  /// No description provided for @homeMenuMostViewedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Most Viewed'**
+  String get homeMenuMostViewedTitle;
+
+  /// No description provided for @homeMenuMostSharedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Most Shared'**
+  String get homeMenuMostSharedTitle;
+
+  /// No description provided for @homeMenuMostEmailedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Most Emailed'**
+  String get homeMenuMostEmailedTitle;
 }
 
 class _AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

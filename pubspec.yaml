@@ -34,3 +34,19 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/fonts/
+  fonts:
+    - family: ReadexPro
+      fonts:
+        - asset: assets/fonts/readex_pro/ReadexPro-bold.ttf
+        - asset: assets/fonts/readex_pro/ReadexPro-Regular.ttf
+        - asset: assets/fonts/readex_pro/ReadexPro-Medium.ttf
+    - family: Avenir
+      fonts:
+        - asset: assets/fonts/avenir/Avenir-Black.ttf
+        - asset: assets/fonts/avenir/Avenir-Heavy.ttf
+        - asset: assets/fonts/avenir/Avenir-Light.ttf
+        - asset: assets/fonts/avenir/Avenir-Book.ttf
+        - weight: 400
+        - asset: assets/fonts/avenir/Avenir-Heavy.ttf
+        - weight: 700

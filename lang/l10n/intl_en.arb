@@ -1,8 +1,16 @@
 {
   "@@locale": "en",
   "titleLandingScreen": "Get Started",
-  "titleHomeScreen": "Home",
+  "titleHomeScreen": "New York Times",
   "actionEnable": "Enable",
   "labelOfflineMode": "Offline Mode",
-  "labelOnlineMode": "Online Mode"
+  "labelOnlineMode": "Online Mode",
+  "homeMenuSearchTitle": "Search",
+  "homeMenuPopularTitle": "Popular",
+  "homeMenuLocationTitle": "Location",
+  "homeMenuSearchArticleTitle": "Search Articles",
+  "homeMenuMostViewedTitle": "Most Viewed",
+  "homeMenuMostSharedTitle": "Most Shared",
+  "homeMenuMostEmailedTitle": "Most Emailed",
+  "homeMenuLocationTitle": "Location"
 }

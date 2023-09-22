@@ -35,7 +35,7 @@ class AppFont {
   static TextStyle bottom_sheet_title = _regular.copyWith(
       fontSize: _font_size_xl, letterSpacing: _letter_spacing_half);
 
-  static const String _font_family = 'ReadexPro';
+  static const String _font_family = 'Avenir';
 
   static const double _font_size_xs = 11;
   static const double _font_size_s = 12;
