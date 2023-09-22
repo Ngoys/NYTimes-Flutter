@@ -6,7 +6,6 @@ import 'package:get_it/get_it.dart';
 import 'package:nytimes/config/base_config.dart';
 import 'package:nytimes/generated/app_localizations.dart';
 import 'package:nytimes/service/article_store.dart';
-import 'package:nytimes/service/geolocation_store.dart';
 import 'package:nytimes/state/network/network_cubit.dart';
 import 'package:nytimes/ui/landing/landing_screen.dart';
 import 'package:nytimes/utils/app_navigator_observer.dart';
@@ -80,7 +79,6 @@ class _CoreAppState extends State<CoreApp> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    GetIt.instance<GeoLocationStore>().close();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }

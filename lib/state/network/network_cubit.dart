@@ -16,18 +16,19 @@ class NetworkCubit extends Cubit<NetworkState> {
     connectivityStreamSubscription = _connectivity.onConnectivityChanged
         .listen((ConnectivityResult connectivityResult) async {
       if (connectivityResult == ConnectivityResult.none) {
-        emitNetworkDisconnectedState();
+        emit(const NetworkDisconnectedState());
       } else {
         if (state is! UnknownNetworkState) {
           final Either<FailureResponse, List<Article>> result =
               await _articleStore
                   .fetchArticles(ArticleListingContentType.mostEmailed);
           result.fold<void>(
-            (FailureResponse failureResponse) => emitNetworkDisconnectedState(),
-            (List<Article> inspection) => emitNetworkConnectedState(),
+            (FailureResponse failureResponse) =>
+                emit(const NetworkDisconnectedState()),
+            (List<Article> inspection) => emit(const NetworkConnectedState()),
           );
         } else {
-          emitNetworkConnectedState();
+          emit(const NetworkConnectedState());
         }
       }
     });
@@ -40,17 +41,11 @@ class NetworkCubit extends Cubit<NetworkState> {
   Future<void> notifyOfCurrentNetworkStatusWhenDisconnected() async {
     final ConnectivityResult result = await _connectivity.checkConnectivity();
     if (result == ConnectivityResult.none) {
-      emitNetworkDisconnectedState();
+      emit(const NetworkDisconnectedState());
     } else {
-      emitNetworkConnectedState();
+      emit(const NetworkConnectedState());
     }
   }
-
-  void emitNetworkConnectedState() => emit(const NetworkConnectedState());
-
-  void emitNetworkDisconnectedState() => emit(const NetworkDisconnectedState());
-
-  void emitServerUnreachableState() => emit(const ServerUnreachableState());
 
   @override
   Future<void> close() async {

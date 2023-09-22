@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nytimes/service/article_store.dart';
 import 'package:nytimes/state/article_listing/article_listing_cubit.dart';
+import 'package:nytimes/state/home/home_cubit.dart';
+import 'package:nytimes/state/location/location_cubit.dart';
 import 'package:nytimes/ui/article_listing/article_listing_screen.dart';
 import 'package:nytimes/ui/home/home_screen.dart';
 import 'package:nytimes/ui/landing/landing_screen.dart';
@@ -24,7 +26,11 @@ Route<dynamic> routeManager(RouteSettings settings) {
       break;
     case HomeScreen.route:
       screen = const HomeScreen();
-      blocProviderList = <BlocProvider<dynamic>>[];
+      blocProviderList = <BlocProvider<dynamic>>[
+        BlocProvider<HomeCubit>(create: (BuildContext context) => HomeCubit()),
+        BlocProvider<LocationCubit>(
+            create: (BuildContext context) => LocationCubit()),
+      ];
       break;
     case ArticleListingScreen.route:
       screen = const ArticleListingScreen();
