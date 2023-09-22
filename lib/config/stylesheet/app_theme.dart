@@ -12,6 +12,8 @@ class AppTheme {
     return ThemeData.from(
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColor.primaryBlue,
+        secondaryContainer:
+            brightness == Brightness.light ? AppColor.lightGray : Colors.grey,
         brightness: brightness,
       ),
       useMaterial3: true,

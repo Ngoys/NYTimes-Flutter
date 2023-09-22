@@ -5,10 +5,6 @@ extension AppColor on Color {
 
   static Color get lightBlue => const Color(0xFFD6ECF6);
 
-  static Color get black => const Color(0xFF000000);
-
-  static Color get white => const Color(0xFFFFFFFF);
-
   static Color get babyBlueEyes => const Color(0xFF93C5FD);
 
   static Color get blackCoral => const Color(0xFF475569);
@@ -22,4 +18,6 @@ extension AppColor on Color {
   static Color get kellyGreen => const Color(0xFF66BC29);
 
   static Color get orangePeel => const Color(0xFFF39800);
+
+  static Color get lightGray => const Color(0xFFF7F2F2);
 }

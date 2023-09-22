@@ -43,10 +43,9 @@ flutter:
         - asset: assets/fonts/readex_pro/ReadexPro-Medium.ttf
     - family: Avenir
       fonts:
-        - asset: assets/fonts/avenir/Avenir-Black.ttf
-        - asset: assets/fonts/avenir/Avenir-Heavy.ttf
-        - asset: assets/fonts/avenir/Avenir-Light.ttf
         - asset: assets/fonts/avenir/Avenir-Book.ttf
         - weight: 400
+        - asset: assets/fonts/avenir/Avenir-Black.ttf
+        - weight: 600
         - asset: assets/fonts/avenir/Avenir-Heavy.ttf
         - weight: 700

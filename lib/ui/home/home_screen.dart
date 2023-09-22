@@ -43,6 +43,13 @@ class _HomeScreenState extends State<HomeScreen> {
           context.localization.titleHomeScreen,
           style: AppFont.titleLarge,
         ),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1),
+          child: Container(
+            color: Colors.grey,
+            height: 0.5,
+          ),
+        ),
       ),
       body: BlocBuilder<HomeCubit, HomeState>(
         builder: (BuildContext context, HomeState state) {
@@ -60,19 +67,32 @@ class _HomeScreenState extends State<HomeScreen> {
                       for (final HomeMenuSection section in state.sections)
                         Column(
                           children: <Widget>[
-                            Text(
-                              section.type.getName(context),
-                              style: AppFont.bodyMedium,
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(12, 16, 0, 8),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: Text(
+                                  section.type.getName(context),
+                                  style: AppFont.bodyMedium,
+                                ),
+                              ),
                             ),
                             ListView.builder(
+                              padding: const EdgeInsets.only(bottom: 24),
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: section.menus.length,
                               itemBuilder: (BuildContext context, int index) {
                                 final HomeMenu menu = section.menus[index];
-                                return Text(
-                                  menu.getName(context),
-                                  style: AppFont.titleMedium,
+                                return Container(
+                                  padding: const EdgeInsets.all(12),
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .secondaryContainer,
+                                  child: Text(
+                                    menu.getName(context),
+                                    style: AppFont.bodyLarge,
+                                  ),
                                 );
                               },
                             ),
