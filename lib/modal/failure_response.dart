@@ -5,7 +5,7 @@ class FailureResponse {
     this.errorDescription,
   });
 
-  final String code;
+  final int? code;
   final String error;
   final String? errorDescription;
 }

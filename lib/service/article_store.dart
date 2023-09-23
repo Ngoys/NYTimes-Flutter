@@ -36,8 +36,7 @@ class ArticleStore {
       );
       if (response.statusCode != 200) {
         return Left<FailureResponse, List<DocumentArticle>>(FailureResponse(
-            code: response.statusCode.toString(),
-            error: response.statusCode.toString()));
+            code: response.statusCode, error: response.statusCode.toString()));
       } else {
         final NYTimesAPIResponse<List<DocumentArticle>> apiResult =
             NYTimesAPIResponse<List<DocumentArticle>>.fromJson(response.data,
@@ -69,8 +68,7 @@ class ArticleStore {
           await _apiClient.appDio.mainDio.get<dynamic>(endPoint);
       if (response.statusCode != 200) {
         return Left<FailureResponse, List<Article>>(FailureResponse(
-            code: response.statusCode.toString(),
-            error: response.statusCode.toString()));
+            code: response.statusCode, error: response.statusCode.toString()));
       } else {
         final NYTimesAPIResult<List<Article>> apiResult =
             NYTimesAPIResult<List<Article>>.fromJson(

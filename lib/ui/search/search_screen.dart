@@ -85,8 +85,7 @@ class _SearchScreenState extends State<SearchScreen> {
             if (state is SearchErrorState) {
               context.appOverlay?.showAlertDialog(
                 context: context,
-                title: (state.failureResponse.code ==
-                        tooManyRequestError.toString())
+                title: (state.failureResponse.code == tooManyRequestError)
                     ? context.localization.labelTooManyRequest
                     : context.localization.labelSomethingWentWrong,
                 body: context.localization.labelPleaseTryAgain,

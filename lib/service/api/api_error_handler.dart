@@ -11,7 +11,7 @@ extension ApiErrorHandler on DioException {
       String localizedMessage = '';
       if (response?.data == null || response?.data.toString() == '[]') {
         return FailureResponse(
-          code: (response?.statusCode).toString(),
+          code: response?.statusCode,
           error: localizedMessage,
           errorDescription: response?.statusMessage ?? '',
         );
@@ -33,7 +33,7 @@ extension ApiErrorHandler on DioException {
       }
 
       return FailureResponse(
-        code: (response?.statusCode).toString(),
+        code: (response?.statusCode),
         error: localizedMessage,
         errorDescription: response?.statusMessage ?? '',
       );
@@ -41,13 +41,13 @@ extension ApiErrorHandler on DioException {
         type == DioExceptionType.receiveTimeout ||
         type == DioExceptionType.sendTimeout) {
       return FailureResponse(
-        code: '500',
+        code: 500,
         error: connectTimeOut.toString(),
         errorDescription: message,
       );
     } else if (type == DioExceptionType.cancel) {
       return FailureResponse(
-        code: '500',
+        code: 500,
         error: cancelledRequest.toString(),
         errorDescription: message,
       );
@@ -59,12 +59,12 @@ extension ApiErrorHandler on DioException {
         if (osError != null) errorCode = osError.errorCode;
 
         return FailureResponse(
-          code: '500',
+          code: 500,
           error: errorCode.toString(),
           errorDescription: message,
         );
       }
     }
-    return FailureResponse(code: '', error: '');
+    return FailureResponse(code: null, error: '');
   }
 }
