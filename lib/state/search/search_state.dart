@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:nytimes/modal/article.dart';
 import 'package:nytimes/modal/document_article.dart';
 
 abstract class SearchState extends Equatable {

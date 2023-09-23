@@ -75,74 +75,79 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ),
       ),
-      body: BlocConsumer<SearchCubit, SearchState>(
-        listener: (BuildContext context, SearchState state) {
-          if (state is SearchErrorState) {
-            context.appOverlay?.showAlertDialog(
-              context: context,
-              title: context.localization.labelSomethingWentWrong,
-              body: context.localization.labelPleaseTryAgain,
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    context.appOverlay?.hideAlertDialog();
-                  },
-                  style: AppFont.buttonMedium,
-                  child: Text(context.localization.ok.toUpperCase()),
-                )
-              ],
-            );
-          }
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
         },
-        builder: (BuildContext context, SearchState state) {
-          return Stack(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
-                    child: SizedBox(
-                      height: 50,
-                      child: TextField(
-                        controller: _textEditingController,
-                        autofocus: true,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          label: Text(
-                            context.localization.searchPlaceholder,
-                            style: AppFont.regular,
+        child: BlocConsumer<SearchCubit, SearchState>(
+          listener: (BuildContext context, SearchState state) {
+            if (state is SearchErrorState) {
+              context.appOverlay?.showAlertDialog(
+                context: context,
+                title: context.localization.labelSomethingWentWrong,
+                body: context.localization.labelPleaseTryAgain,
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      context.appOverlay?.hideAlertDialog();
+                    },
+                    style: AppFont.buttonMedium,
+                    child: Text(context.localization.ok.toUpperCase()),
+                  )
+                ],
+              );
+            }
+          },
+          builder: (BuildContext context, SearchState state) {
+            return Stack(
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                      child: SizedBox(
+                        height: 50,
+                        child: TextField(
+                          controller: _textEditingController,
+                          autofocus: true,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            label: Text(
+                              context.localization.searchPlaceholder,
+                              style: AppFont.regular,
+                            ),
+                            border: const OutlineInputBorder(),
                           ),
-                          border: const OutlineInputBorder(),
                         ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Scrollbar(
-                      controller: _scrollController,
-                      child: ListView.builder(
+                    Expanded(
+                      child: Scrollbar(
                         controller: _scrollController,
-                        keyboardDismissBehavior:
-                            ScrollViewKeyboardDismissBehavior.onDrag,
-                        padding: const EdgeInsets.only(top: 12),
-                        itemCount: _searchCubit.getDocumentArticles().length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final DocumentArticle documentArticle =
-                              _searchCubit.getDocumentArticles()[index];
-                          return DocumentArticleItemWidget(documentArticle);
-                        },
+                        child: ListView.builder(
+                          controller: _scrollController,
+                          keyboardDismissBehavior:
+                              ScrollViewKeyboardDismissBehavior.onDrag,
+                          padding: const EdgeInsets.only(top: 12),
+                          itemCount: _searchCubit.getDocumentArticles().length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final DocumentArticle documentArticle =
+                                _searchCubit.getDocumentArticles()[index];
+                            return DocumentArticleItemWidget(documentArticle);
+                          },
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              if (state is SearchLoadingState)
-                const Center(
-                  child: CircularProgressIndicator(),
+                  ],
                 ),
-            ],
-          );
-        },
+                if (state is SearchLoadingState)
+                  const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
