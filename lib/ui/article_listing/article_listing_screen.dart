@@ -77,8 +77,8 @@ class _ArticleListingScreenState extends State<ArticleListingScreen> {
 
                 String? formattedDate;
                 if (article.publishedDate != null) {
-                  formattedDate =
-                      article.publishedDate!.toRelativeDate('MMMM d, yyyy');
+                  formattedDate = article.publishedDate!
+                      .toRelativeDate('MMMM d, yyyy', context: context);
                 }
 
                 return Column(

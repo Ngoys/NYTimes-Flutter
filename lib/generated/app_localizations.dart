@@ -121,6 +121,36 @@ abstract class AppLocalization {
   /// **'ok'**
   String get ok;
 
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get yesterday;
+
+  /// No description provided for @hoursAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{An hour ago} other{{count} hours ago}}'**
+  String hoursAgo(num count);
+
+  /// No description provided for @minutesAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 minute ago} other{{count} minutes ago}}'**
+  String minutesAgo(num count);
+
+  /// No description provided for @justNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get justNow;
+
   /// No description provided for @homeMenuSearchTitle.
   ///
   /// In en, this message translates to:

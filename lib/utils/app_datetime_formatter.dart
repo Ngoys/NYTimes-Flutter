@@ -1,25 +1,25 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:nytimes/utils/context_extension.dart';
 
 extension AppDateTimeFormatter on DateTime {
-  String toRelativeDate(String format) {
+  String toRelativeDate(String format, {BuildContext? context}) {
     final DateFormat dateFormat = DateFormat(format);
     final DateTime now = DateTime.now();
     final Duration difference = now.difference(this);
 
     if (difference.inDays == 0) {
-      return 'Today';
+      return context?.localization.today ?? 'Today';
     } else if (difference.inDays == 1) {
-      return 'Yesterday';
-    } else if (difference.inHours >= 2 && difference.inDays == 0) {
-      return '${difference.inHours} hours ago';
+      return context?.localization.yesterday ?? 'Yesterday';
     } else if (difference.inHours >= 1 && difference.inDays == 0) {
-      return 'An hour ago';
-    } else if (difference.inMinutes >= 2 && difference.inDays == 0) {
-      return '${difference.inMinutes} minutes ago';
+      return context?.localization.hoursAgo(difference.inHours) ??
+          '${difference.inHours} hours ago';
     } else if (difference.inMinutes >= 1 && difference.inDays == 0) {
-      return '1 minute ago';
+      return context?.localization.minutesAgo(difference.inMinutes) ??
+          '${difference.inHours} minutes ago';
     } else if (difference.inSeconds >= 3 && difference.inDays == 0) {
-      return 'Just now';
+      return context?.localization.justNow ?? 'Just now';
     }
 
     return dateFormat.format(this);

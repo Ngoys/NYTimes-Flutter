@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 /// The translations for English (`en`).
@@ -18,6 +20,37 @@ class AppLocalizationEn extends AppLocalization {
 
   @override
   String get ok => 'ok';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get yesterday => 'Yesterday';
+
+  @override
+  String hoursAgo(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count hours ago',
+      one: 'An hour ago',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String minutesAgo(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count minutes ago',
+      one: '1 minute ago',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get justNow => 'Just now';
 
   @override
   String get homeMenuSearchTitle => 'Search';
