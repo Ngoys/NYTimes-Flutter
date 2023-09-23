@@ -24,6 +24,7 @@
   
   "labelOfflineMode": "Offline Mode",
   "labelOnlineMode": "Online Mode",
+  "labelTooManyRequest": "Too many request",
   "labelSomethingWentWrong": "Something went wrong",
   "labelPleaseTryAgain": "Please try again later"
 }

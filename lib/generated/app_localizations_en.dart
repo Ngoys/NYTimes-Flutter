@@ -86,6 +86,9 @@ class AppLocalizationEn extends AppLocalization {
   String get labelOnlineMode => 'Online Mode';
 
   @override
+  String get labelTooManyRequest => 'Too many request';
+
+  @override
   String get labelSomethingWentWrong => 'Something went wrong';
 
   @override

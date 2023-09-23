@@ -20,6 +20,7 @@ const int unAuth = 401;
 const int forbidden = 403;
 const int unsupportedMediaType = 415;
 const int serverError = 500;
+const int tooManyRequestError = 429;
 
 const int maxRetryCount = 2;
 

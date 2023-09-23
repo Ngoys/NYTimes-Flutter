@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:nytimes/modal/document_article.dart';
+import 'package:nytimes/modal/failure_response.dart';
 
 abstract class SearchState extends Equatable {
   const SearchState();
@@ -30,5 +31,10 @@ class SearchLoadedState extends SearchState {
 }
 
 class SearchErrorState extends SearchState {
-  const SearchErrorState();
+  const SearchErrorState(this.failureResponse);
+
+  final FailureResponse failureResponse;
+
+  @override
+  List<Object> get props => <Object>[failureResponse];
 }

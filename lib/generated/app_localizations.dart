@@ -217,6 +217,12 @@ abstract class AppLocalization {
   /// **'Online Mode'**
   String get labelOnlineMode;
 
+  /// No description provided for @labelTooManyRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many request'**
+  String get labelTooManyRequest;
+
   /// No description provided for @labelSomethingWentWrong.
   ///
   /// In en, this message translates to:

@@ -6,6 +6,7 @@ import 'package:nytimes/config/stylesheet/app_font.dart';
 import 'package:nytimes/modal/document_article.dart';
 import 'package:nytimes/state/search/search_cubit.dart';
 import 'package:nytimes/state/search/search_state.dart';
+import 'package:nytimes/utils/constants.dart';
 import 'package:nytimes/utils/context_extension.dart';
 import 'package:nytimes/widget/document_article_item_widget.dart';
 
@@ -84,7 +85,10 @@ class _SearchScreenState extends State<SearchScreen> {
             if (state is SearchErrorState) {
               context.appOverlay?.showAlertDialog(
                 context: context,
-                title: context.localization.labelSomethingWentWrong,
+                title: (state.failureResponse.code ==
+                        tooManyRequestError.toString())
+                    ? context.localization.labelTooManyRequest
+                    : context.localization.labelSomethingWentWrong,
                 body: context.localization.labelPleaseTryAgain,
                 actions: <Widget>[
                   TextButton(

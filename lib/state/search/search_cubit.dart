@@ -47,7 +47,7 @@ class SearchCubit extends Cubit<SearchState> {
     );
     result.fold<void>(
       (FailureResponse failureResponse) {
-        emit(const SearchErrorState());
+        emit(SearchErrorState(failureResponse));
         _pageNumber--;
       },
       (List<DocumentArticle> newDocumentArticles) {
