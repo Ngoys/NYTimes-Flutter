@@ -109,17 +109,17 @@ abstract class AppLocalization {
   /// **'Enable'**
   String get actionEnable;
 
-  /// No description provided for @labelOfflineMode.
+  /// No description provided for @article.
   ///
   /// In en, this message translates to:
-  /// **'Offline Mode'**
-  String get labelOfflineMode;
+  /// **'Article'**
+  String get article;
 
-  /// No description provided for @labelOnlineMode.
+  /// No description provided for @ok.
   ///
   /// In en, this message translates to:
-  /// **'Online Mode'**
-  String get labelOnlineMode;
+  /// **'ok'**
+  String get ok;
 
   /// No description provided for @homeMenuSearchTitle.
   ///
@@ -162,6 +162,30 @@ abstract class AppLocalization {
   /// In en, this message translates to:
   /// **'Most Emailed'**
   String get homeMenuMostEmailedTitle;
+
+  /// No description provided for @labelOfflineMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline Mode'**
+  String get labelOfflineMode;
+
+  /// No description provided for @labelOnlineMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Online Mode'**
+  String get labelOnlineMode;
+
+  /// No description provided for @labelSomethingWentWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get labelSomethingWentWrong;
+
+  /// No description provided for @labelPleaseTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Please try again later'**
+  String get labelPleaseTryAgain;
 }
 
 class _AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

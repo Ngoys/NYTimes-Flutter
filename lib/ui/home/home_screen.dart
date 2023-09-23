@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nytimes/config/stylesheet/app_color.dart';
 import 'package:nytimes/config/stylesheet/app_font.dart';
+import 'package:nytimes/modal/article_listing_content_type.dart';
 import 'package:nytimes/modal/home_menu.dart';
 import 'package:nytimes/modal/home_menu_section.dart';
 import 'package:nytimes/state/home/home_cubit.dart';
 import 'package:nytimes/state/home/home_state.dart';
 import 'package:nytimes/state/location/location_cubit.dart';
 import 'package:nytimes/state/location/location_state.dart';
+import 'package:nytimes/ui/article_listing/article_listing_screen.dart';
+import 'package:nytimes/utils/constants.dart';
 import 'package:nytimes/utils/context_extension.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -44,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           style: AppFont.titleLarge,
         ),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
+          preferredSize: const Size.fromHeight(0.5),
           child: Container(
             color: Colors.grey,
             height: 0.5,
@@ -84,14 +88,53 @@ class _HomeScreenState extends State<HomeScreen> {
                               itemCount: section.menus.length,
                               itemBuilder: (BuildContext context, int index) {
                                 final HomeMenu menu = section.menus[index];
-                                return Container(
-                                  padding: const EdgeInsets.all(12),
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .secondaryContainer,
-                                  child: Text(
-                                    menu.getName(context),
-                                    style: AppFont.bodyLarge,
+                                return TextButton(
+                                  onPressed: () {
+                                    ArticleListingContentType?
+                                        articleListingContentType;
+
+                                    switch (menu) {
+                                      case HomeMenu.mostEmailed:
+                                        articleListingContentType =
+                                            ArticleListingContentType
+                                                .mostEmailed;
+                                      case HomeMenu.mostShared:
+                                        articleListingContentType =
+                                            ArticleListingContentType
+                                                .mostShared;
+                                      case HomeMenu.mostViewed:
+                                        articleListingContentType =
+                                            ArticleListingContentType
+                                                .mostViewed;
+                                    }
+
+                                    if (articleListingContentType != null) {
+                                      Navigator.pushNamed(
+                                          context, ArticleListingScreen.route,
+                                          arguments: <String, dynamic>{
+                                            NAV_ARTICLE_LISTING_CONTENT_TYPE:
+                                                articleListingContentType,
+                                          });
+                                    }
+                                  },
+                                  style: TextButton.styleFrom(
+                                    padding: const EdgeInsets.all(12),
+                                    backgroundColor: Theme.of(context)
+                                        .colorScheme
+                                        .secondaryContainer,
+                                    foregroundColor: AppColor.primaryBlue,
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.all(Radius.zero)),
+                                  ),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      menu.getName(context),
+                                      style: AppFont.bodyLarge.copyWith(
+                                          color: Colors
+                                              .black), // Adjust text color
+                                    ),
                                   ),
                                 );
                               },

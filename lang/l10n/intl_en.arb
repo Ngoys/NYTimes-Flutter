@@ -3,8 +3,9 @@
   "titleLandingScreen": "Get Started",
   "titleHomeScreen": "New York Times",
   "actionEnable": "Enable",
-  "labelOfflineMode": "Offline Mode",
-  "labelOnlineMode": "Online Mode",
+  "article": "Article",
+  "ok": "ok",
+  
   "homeMenuSearchTitle": "Search",
   "homeMenuPopularTitle": "Popular",
   "homeMenuLocationTitle": "Location",
@@ -12,5 +13,10 @@
   "homeMenuMostViewedTitle": "Most Viewed",
   "homeMenuMostSharedTitle": "Most Shared",
   "homeMenuMostEmailedTitle": "Most Emailed",
-  "homeMenuLocationTitle": "Location"
+  "homeMenuLocationTitle": "Location",
+  
+  "labelOfflineMode": "Offline Mode",
+  "labelOnlineMode": "Online Mode",
+  "labelSomethingWentWrong": "Something went wrong",
+  "labelPleaseTryAgain": "Please try again later"
 }

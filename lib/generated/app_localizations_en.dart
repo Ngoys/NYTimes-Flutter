@@ -14,10 +14,10 @@ class AppLocalizationEn extends AppLocalization {
   String get actionEnable => 'Enable';
 
   @override
-  String get labelOfflineMode => 'Offline Mode';
+  String get article => 'Article';
 
   @override
-  String get labelOnlineMode => 'Online Mode';
+  String get ok => 'ok';
 
   @override
   String get homeMenuSearchTitle => 'Search';
@@ -39,4 +39,16 @@ class AppLocalizationEn extends AppLocalization {
 
   @override
   String get homeMenuMostEmailedTitle => 'Most Emailed';
+
+  @override
+  String get labelOfflineMode => 'Offline Mode';
+
+  @override
+  String get labelOnlineMode => 'Online Mode';
+
+  @override
+  String get labelSomethingWentWrong => 'Something went wrong';
+
+  @override
+  String get labelPleaseTryAgain => 'Please try again later';
 }

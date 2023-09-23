@@ -15,6 +15,8 @@ class ArticleListingCubit extends Cubit<ArticleListingState> {
 
   Future<void> fetchArticleListings(
       ArticleListingContentType articleListingContentType) async {
+    emit(const ArticleListingLoadingState());
+
     final Either<FailureResponse, List<Article>> result =
         await _articleStore.fetchArticles(articleListingContentType);
     result.fold<void>(

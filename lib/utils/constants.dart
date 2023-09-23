@@ -39,3 +39,5 @@ const Key appOverlayKeyLoadingMessage = Key('AppOverlay_LoadingMessageKey');
 //----------------------------------------
 
 const String NAV_SHOULD_PUSH_ANIMATION = 'nav-should-push-animation';
+const String NAV_ARTICLE_LISTING_CONTENT_TYPE =
+    'nav-article-listing-content-type';
