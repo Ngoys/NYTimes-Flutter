@@ -19,6 +19,9 @@ class AppLocalizationEn extends AppLocalization {
   String get article => 'Article';
 
   @override
+  String get search => 'Search';
+
+  @override
   String get ok => 'ok';
 
   @override
@@ -51,6 +54,9 @@ class AppLocalizationEn extends AppLocalization {
 
   @override
   String get justNow => 'Just now';
+
+  @override
+  String get searchPlaceholder => 'Start searching...';
 
   @override
   String get homeMenuSearchTitle => 'Search';

@@ -3,6 +3,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:nytimes/config/stylesheet/app_color.dart';
 
 class AppFont {
   AppFont._();
@@ -24,6 +25,14 @@ class AppFont {
 
   static TextStyle bodySmall = regular.copyWith(
       fontSize: font_size_s, letterSpacing: letter_spacing_half);
+
+  static TextStyle button = medium.copyWith(
+      fontSize: font_size_r, letterSpacing: letter_spacing_half);
+
+  static ButtonStyle buttonMedium = TextButton.styleFrom(
+      foregroundColor: AppColor.primaryBlue,
+      backgroundColor: Colors.transparent,
+      textStyle: button);
 
   static const String font_family = 'Avenir';
 

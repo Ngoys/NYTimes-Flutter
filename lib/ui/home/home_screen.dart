@@ -10,6 +10,7 @@ import 'package:nytimes/state/home/home_state.dart';
 import 'package:nytimes/state/location/location_cubit.dart';
 import 'package:nytimes/state/location/location_state.dart';
 import 'package:nytimes/ui/article_listing/article_listing_screen.dart';
+import 'package:nytimes/ui/search/search_screen.dart';
 import 'package:nytimes/utils/constants.dart';
 import 'package:nytimes/utils/context_extension.dart';
 
@@ -90,31 +91,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                 final HomeMenu menu = section.menus[index];
                                 return TextButton(
                                   onPressed: () {
-                                    ArticleListingContentType?
-                                        articleListingContentType;
-
                                     switch (menu) {
                                       case HomeMenu.mostEmailed:
-                                        articleListingContentType =
-                                            ArticleListingContentType
-                                                .mostEmailed;
+                                        Navigator.pushNamed(
+                                            context, ArticleListingScreen.route,
+                                            arguments: <String, dynamic>{
+                                              NAV_ARTICLE_LISTING_CONTENT_TYPE:
+                                                  ArticleListingContentType
+                                                      .mostEmailed,
+                                            });
                                       case HomeMenu.mostShared:
-                                        articleListingContentType =
-                                            ArticleListingContentType
-                                                .mostShared;
+                                        Navigator.pushNamed(
+                                            context, ArticleListingScreen.route,
+                                            arguments: <String, dynamic>{
+                                              NAV_ARTICLE_LISTING_CONTENT_TYPE:
+                                                  ArticleListingContentType
+                                                      .mostShared,
+                                            });
                                       case HomeMenu.mostViewed:
-                                        articleListingContentType =
-                                            ArticleListingContentType
-                                                .mostViewed;
-                                    }
-
-                                    if (articleListingContentType != null) {
-                                      Navigator.pushNamed(
-                                          context, ArticleListingScreen.route,
-                                          arguments: <String, dynamic>{
-                                            NAV_ARTICLE_LISTING_CONTENT_TYPE:
-                                                articleListingContentType,
-                                          });
+                                        Navigator.pushNamed(
+                                            context, ArticleListingScreen.route,
+                                            arguments: <String, dynamic>{
+                                              NAV_ARTICLE_LISTING_CONTENT_TYPE:
+                                                  ArticleListingContentType
+                                                      .mostViewed,
+                                            });
+                                      case HomeMenu.searchArticle:
+                                        Navigator.pushNamed(
+                                          context,
+                                          SearchScreen.route,
+                                        );
                                     }
                                   },
                                   style: TextButton.styleFrom(

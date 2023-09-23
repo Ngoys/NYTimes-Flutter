@@ -115,6 +115,12 @@ abstract class AppLocalization {
   /// **'Article'**
   String get article;
 
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
   /// No description provided for @ok.
   ///
   /// In en, this message translates to:
@@ -150,6 +156,12 @@ abstract class AppLocalization {
   /// In en, this message translates to:
   /// **'Just now'**
   String get justNow;
+
+  /// No description provided for @searchPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Start searching...'**
+  String get searchPlaceholder;
 
   /// No description provided for @homeMenuSearchTitle.
   ///

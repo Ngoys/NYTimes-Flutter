@@ -1,18 +1,18 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nytimes/config/stylesheet/app_font.dart';
-import 'package:nytimes/modal/article.dart';
-import 'package:nytimes/modal/article_listing_content_type.dart';
-import 'package:nytimes/state/article_listing/article_listing_cubit.dart';
-import 'package:nytimes/state/article_listing/article_listing_state.dart';
-import 'package:nytimes/utils/app_datetime_formatter.dart';
-import 'package:nytimes/utils/constants.dart';
+import 'package:nytimes/modal/document_article.dart';
+import 'package:nytimes/state/search/search_cubit.dart';
+import 'package:nytimes/state/search/search_state.dart';
 import 'package:nytimes/utils/context_extension.dart';
+import 'package:nytimes/widget/document_article_item_widget.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
 
-  static const String route = '/article_listing';
+  static const String route = '/search';
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -20,12 +20,43 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   late final SearchCubit _searchCubit;
+  late final ScrollController _scrollController;
+  late final TextEditingController _textEditingController;
+  Timer? _searchDebounce;
 
   @override
   void initState() {
     super.initState();
 
     _searchCubit = BlocProvider.of<SearchCubit>(context);
+
+    _scrollController = ScrollController()
+      ..addListener(() {
+        if (_scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent * 0.68) {
+          _searchCubit.loadMoreDocumentArticle();
+        }
+      });
+
+    _textEditingController = TextEditingController()
+      ..addListener(() {
+        _searchCubit.updateKeyword(_textEditingController.text);
+
+        if (_searchDebounce?.isActive ?? false) _searchDebounce?.cancel();
+        _searchDebounce = Timer(const Duration(milliseconds: 500), () {
+          if (_textEditingController.text.length >= 3) {
+            _searchCubit.startSearchDocumentArticle();
+          }
+        });
+      });
+  }
+
+  @override
+  void dispose() {
+    _textEditingController.dispose();
+    _scrollController.dispose();
+    _searchDebounce?.cancel();
+    super.dispose();
   }
 
   @override
@@ -33,7 +64,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _articleListingContentType.getName(context),
+          context.localization.search,
           style: AppFont.titleLarge,
         ),
         bottom: PreferredSize(
@@ -48,63 +79,69 @@ class _SearchScreenState extends State<SearchScreen> {
         listener: (BuildContext context, SearchState state) {
           if (state is SearchErrorState) {
             context.appOverlay?.showAlertDialog(
-                context: context,
-                title: context.localization.labelSomethingWentWrong,
-                body: context.localization.labelPleaseTryAgain);
+              context: context,
+              title: context.localization.labelSomethingWentWrong,
+              body: context.localization.labelPleaseTryAgain,
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    context.appOverlay?.hideAlertDialog();
+                  },
+                  style: AppFont.buttonMedium,
+                  child: Text(context.localization.ok.toUpperCase()),
+                )
+              ],
+            );
           }
         },
         builder: (BuildContext context, SearchState state) {
-          if (state is SearchLoadedState) {
-            return Scrollbar(
-              child: ListView.builder(
-                padding: const EdgeInsets.only(top: 12),
-                itemCount: state.articles.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final Article article = state.articles[index];
-
-                  String? formattedDate;
-                  if (article.publishedDate != null) {
-                    formattedDate = article.publishedDate!
-                        .toRelativeDate('MMMM d, yyyy', context: context);
-                  }
-
-                  return Column(
-                    children: <Widget>[
-                      if (article.title != null)
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(article.title ?? '',
-                                maxLines: 3,
-                                style: AppFont.bodyLarge.copyWith(
-                                    height: 1.2, letterSpacing: -0.3)),
+          return Stack(
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                    child: SizedBox(
+                      height: 50,
+                      child: TextField(
+                        controller: _textEditingController,
+                        autofocus: true,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          label: Text(
+                            context.localization.searchPlaceholder,
+                            style: AppFont.regular,
                           ),
+                          border: const OutlineInputBorder(),
                         ),
-                      if (formattedDate != null)
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(12, 4, 12, 12),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              formattedDate,
-                              style: AppFont.bodySmall
-                                  .copyWith(fontSize: AppFont.font_size_r),
-                            ),
-                          ),
-                        ),
-                      const Divider(height: 0.5, color: Colors.grey),
-                    ],
-                  );
-                },
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Scrollbar(
+                      controller: _scrollController,
+                      child: ListView.builder(
+                        controller: _scrollController,
+                        keyboardDismissBehavior:
+                            ScrollViewKeyboardDismissBehavior.onDrag,
+                        padding: const EdgeInsets.only(top: 12),
+                        itemCount: _searchCubit.getDocumentArticles().length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final DocumentArticle documentArticle =
+                              _searchCubit.getDocumentArticles()[index];
+                          return DocumentArticleItemWidget(documentArticle);
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            );
-          } else if (state is SearchLoadingState) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return Container();
+              if (state is SearchLoadingState)
+                const Center(
+                  child: CircularProgressIndicator(),
+                ),
+            ],
+          );
         },
       ),
     );

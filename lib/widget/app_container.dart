@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nytimes/state/network/network_cubit.dart';
 import 'package:nytimes/state/network/network_state.dart';
-import 'package:nytimes/widget/network_indicator.dart';
+import 'package:nytimes/widget/network_indicator_widget.dart';
 
 class AppContainer extends StatelessWidget {
   const AppContainer({required this.child, super.key});
