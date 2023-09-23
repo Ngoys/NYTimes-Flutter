@@ -69,47 +69,49 @@ class _ArticleListingScreenState extends State<ArticleListingScreen> {
         },
         builder: (BuildContext context, ArticleListingState state) {
           if (state is ArticleListingLoadedState) {
-            return ListView.builder(
-              padding: const EdgeInsets.only(top: 12),
-              itemCount: state.articles.length,
-              itemBuilder: (BuildContext context, int index) {
-                final Article article = state.articles[index];
+            return Scrollbar(
+              child: ListView.builder(
+                padding: const EdgeInsets.only(top: 12),
+                itemCount: state.articles.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final Article article = state.articles[index];
 
-                String? formattedDate;
-                if (article.publishedDate != null) {
-                  formattedDate = article.publishedDate!
-                      .toRelativeDate('MMMM d, yyyy', context: context);
-                }
+                  String? formattedDate;
+                  if (article.publishedDate != null) {
+                    formattedDate = article.publishedDate!
+                        .toRelativeDate('MMMM d, yyyy', context: context);
+                  }
 
-                return Column(
-                  children: <Widget>[
-                    if (article.title != null)
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(article.title ?? '',
-                              maxLines: 3,
-                              style: AppFont.bodyLarge
-                                  .copyWith(height: 1.2, letterSpacing: -0.3)),
-                        ),
-                      ),
-                    if (formattedDate != null)
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(12, 4, 12, 12),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            formattedDate,
-                            style: AppFont.bodySmall
-                                .copyWith(fontSize: AppFont.font_size_r),
+                  return Column(
+                    children: <Widget>[
+                      if (article.title != null)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(article.title ?? '',
+                                maxLines: 3,
+                                style: AppFont.bodyLarge.copyWith(
+                                    height: 1.2, letterSpacing: -0.3)),
                           ),
                         ),
-                      ),
-                    const Divider(height: 0.5, color: Colors.grey),
-                  ],
-                );
-              },
+                      if (formattedDate != null)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(12, 4, 12, 12),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              formattedDate,
+                              style: AppFont.bodySmall
+                                  .copyWith(fontSize: AppFont.font_size_r),
+                            ),
+                          ),
+                        ),
+                      const Divider(height: 0.5, color: Colors.grey),
+                    ],
+                  );
+                },
+              ),
             );
           } else if (state is ArticleListingLoadingState) {
             return const Center(
