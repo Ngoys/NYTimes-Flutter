@@ -32,7 +32,7 @@ class SearchCubit extends Cubit<SearchState> {
   }
 
   Future<void> loadMoreDocumentArticle() async {
-    if (state is! SearchLoadingNextPageState) {
+    if (state is SearchLoadedState) {
       _pageNumber++;
       emit(const SearchLoadingNextPageState());
       await _searchDocumentArticle();
@@ -48,6 +48,7 @@ class SearchCubit extends Cubit<SearchState> {
     result.fold<void>(
       (FailureResponse failureResponse) {
         emit(const SearchErrorState());
+        _pageNumber--;
       },
       (List<DocumentArticle> newDocumentArticles) {
         _documentArticles = _documentArticles + newDocumentArticles;
