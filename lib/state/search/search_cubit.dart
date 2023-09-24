@@ -3,14 +3,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nytimes/modal/document_article.dart';
 import 'package:nytimes/modal/failure_response.dart';
 import 'package:nytimes/service/article_store.dart';
+import 'package:nytimes/service/drift_db_store.dart';
 import 'package:nytimes/state/search/search_state.dart';
 
 class SearchCubit extends Cubit<SearchState> {
-  SearchCubit({required ArticleStore articleStore})
+  SearchCubit(
+      {required ArticleStore articleStore, required DriftDBStore driftDBStore})
       : _articleStore = articleStore,
+        _driftDBStore = driftDBStore,
         super(const SearchInitialState());
 
   final ArticleStore _articleStore;
+  final DriftDBStore _driftDBStore;
+
   String _keyword = '';
   int _pageNumber = 1;
   List<DocumentArticle> _documentArticles = <DocumentArticle>[];

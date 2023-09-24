@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nytimes/service/article_store.dart';
+import 'package:nytimes/service/drift_db_store.dart';
 import 'package:nytimes/state/article_listing/article_listing_cubit.dart';
 import 'package:nytimes/state/home/home_cubit.dart';
 import 'package:nytimes/state/location/location_cubit.dart';
@@ -12,7 +13,7 @@ import 'package:nytimes/ui/landing/landing_screen.dart';
 import 'package:nytimes/ui/route/no_animation_page_route.dart';
 import 'package:nytimes/ui/search/search_screen.dart';
 import 'package:nytimes/utils/constants.dart';
-import 'package:nytimes/widget/app_overlays.dart';
+import 'package:nytimes/widget/app_overlay.dart';
 
 Route<dynamic> routeManager(RouteSettings settings) {
   late Widget screen;
@@ -46,8 +47,9 @@ Route<dynamic> routeManager(RouteSettings settings) {
       screen = const SearchScreen();
       blocProviderList = <BlocProvider<dynamic>>[
         BlocProvider<SearchCubit>(
-            create: (BuildContext context) =>
-                SearchCubit(articleStore: getIt<ArticleStore>())),
+            create: (BuildContext context) => SearchCubit(
+                articleStore: getIt<ArticleStore>(),
+                driftDBStore: getIt<DriftDBStore>())),
       ];
       break;
     default:
