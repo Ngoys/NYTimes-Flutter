@@ -20,6 +20,7 @@ class ArticleDao extends DatabaseAccessor<DriftDB> with _$ArticleDaoMixin {
           articleListingContentType: articleListingContentType),
       mode: InsertMode.insertOrReplace,
     );
+
     return article.mapToModel();
   }
 
@@ -35,6 +36,7 @@ class ArticleDao extends DatabaseAccessor<DriftDB> with _$ArticleDaoMixin {
         articles.map((Article article) {
       return article.mapToModel();
     }).toList();
+
     return articleDataModels;
   }
 }

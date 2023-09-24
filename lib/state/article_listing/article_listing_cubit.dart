@@ -38,7 +38,9 @@ class ArticleListingCubit extends Cubit<ArticleListingState> {
         await _articleStore.fetchArticles(articleListingContentType);
     result.fold<void>(
       (FailureResponse failureResponse) {
-        emit(const ArticleListingErrorState());
+        if (articleDataModals.isEmpty) {
+          emit(const ArticleListingErrorState());
+        }
       },
       (List<Article> articles) {
         for (final Article article in articles) {
