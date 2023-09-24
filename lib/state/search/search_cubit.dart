@@ -57,6 +57,9 @@ class SearchCubit extends Cubit<SearchState> {
       },
       (List<DocumentArticle> newDocumentArticles) {
         _documentArticles = _documentArticles + newDocumentArticles;
+
+// _documentArticles.map((e) => await _driftDBStore.createOrUpdateArticle(article.mapToDataModel());)
+
         emit(SearchLoadedState(_documentArticles));
       },
     );

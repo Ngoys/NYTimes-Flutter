@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:nytimes/modal/article_listing_content_type.dart';
 import 'package:nytimes/service/drift_db/data_model/article_data_model.dart';
 import 'package:nytimes/service/drift_db/drift_db.dart';
 import 'package:nytimes/service/drift_db/entity/article_entity.dart';
@@ -12,12 +13,28 @@ class ArticleDao extends DatabaseAccessor<DriftDB> with _$ArticleDaoMixin {
 
   Future<ArticleDataModel> createOrUpdate(
     ArticleDataModel model,
+    ArticleListingContentType articleListingContentType,
   ) async {
-    final Article user = await into(articleEntity).insertReturning(
-      model.mapToCompanion(),
+    final Article article = await into(articleEntity).insertReturning(
+      model.mapToCompanion(
+          articleListingContentType: articleListingContentType),
       mode: InsertMode.insertOrReplace,
     );
+    return article.mapToModel();
+  }
 
-    return user.mapToDataModel();
+  Future<List<ArticleDataModel>> fetchArticles(
+    ArticleListingContentType articleListingContentType,
+  ) async {
+    final List<Article> articles = await (select(articleEntity)
+          ..where(($ArticleEntityTable t) => t.articleListingContentType
+              .equals(articleListingContentType.toString())))
+        .get();
+
+    final List<ArticleDataModel> articleDataModels =
+        articles.map((Article article) {
+      return article.mapToModel();
+    }).toList();
+    return articleDataModels;
   }
 }

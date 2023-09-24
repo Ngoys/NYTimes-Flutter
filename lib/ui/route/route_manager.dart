@@ -39,8 +39,9 @@ Route<dynamic> routeManager(RouteSettings settings) {
       screen = const ArticleListingScreen();
       blocProviderList = <BlocProvider<dynamic>>[
         BlocProvider<ArticleListingCubit>(
-            create: (BuildContext context) =>
-                ArticleListingCubit(articleStore: getIt<ArticleStore>())),
+            create: (BuildContext context) => ArticleListingCubit(
+                articleStore: getIt<ArticleStore>(),
+                driftDBStore: getIt<DriftDBStore>())),
       ];
       break;
     case SearchScreen.route:

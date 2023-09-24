@@ -47,7 +47,7 @@ class _ArticleListingScreenState extends State<ArticleListingScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _articleListingContentType.getName(context),
+          _articleListingContentType.getTitle(context),
           style: AppFont.titleLarge,
         ),
         bottom: PreferredSize(

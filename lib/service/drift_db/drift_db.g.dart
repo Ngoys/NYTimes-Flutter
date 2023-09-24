@@ -25,8 +25,16 @@ class $ArticleEntityTable extends ArticleEntity
   late final GeneratedColumn<DateTime> publishedDate =
       GeneratedColumn<DateTime>('published_date', aliasedName, true,
           type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _articleListingContentTypeMeta =
+      const VerificationMeta('articleListingContentType');
   @override
-  List<GeneratedColumn> get $columns => [id, title, publishedDate];
+  late final GeneratedColumn<String> articleListingContentType =
+      GeneratedColumn<String>(
+          'article_listing_content_type', aliasedName, false,
+          type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, title, publishedDate, articleListingContentType];
   @override
   String get aliasedName => _alias ?? 'article_entity';
   @override
@@ -51,6 +59,15 @@ class $ArticleEntityTable extends ArticleEntity
           publishedDate.isAcceptableOrUnknown(
               data['published_date']!, _publishedDateMeta));
     }
+    if (data.containsKey('article_listing_content_type')) {
+      context.handle(
+          _articleListingContentTypeMeta,
+          articleListingContentType.isAcceptableOrUnknown(
+              data['article_listing_content_type']!,
+              _articleListingContentTypeMeta));
+    } else if (isInserting) {
+      context.missing(_articleListingContentTypeMeta);
+    }
     return context;
   }
 
@@ -66,6 +83,9 @@ class $ArticleEntityTable extends ArticleEntity
           .read(DriftSqlType.string, data['${effectivePrefix}title']),
       publishedDate: attachedDatabase.typeMapping.read(
           DriftSqlType.dateTime, data['${effectivePrefix}published_date']),
+      articleListingContentType: attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}article_listing_content_type'])!,
     );
   }
 
@@ -79,7 +99,12 @@ class Article extends DataClass implements Insertable<Article> {
   final String id;
   final String? title;
   final DateTime? publishedDate;
-  const Article({required this.id, this.title, this.publishedDate});
+  final String articleListingContentType;
+  const Article(
+      {required this.id,
+      this.title,
+      this.publishedDate,
+      required this.articleListingContentType});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -90,6 +115,8 @@ class Article extends DataClass implements Insertable<Article> {
     if (!nullToAbsent || publishedDate != null) {
       map['published_date'] = Variable<DateTime>(publishedDate);
     }
+    map['article_listing_content_type'] =
+        Variable<String>(articleListingContentType);
     return map;
   }
 
@@ -101,6 +128,7 @@ class Article extends DataClass implements Insertable<Article> {
       publishedDate: publishedDate == null && nullToAbsent
           ? const Value.absent()
           : Value(publishedDate),
+      articleListingContentType: Value(articleListingContentType),
     );
   }
 
@@ -111,6 +139,8 @@ class Article extends DataClass implements Insertable<Article> {
       id: serializer.fromJson<String>(json['id']),
       title: serializer.fromJson<String?>(json['title']),
       publishedDate: serializer.fromJson<DateTime?>(json['publishedDate']),
+      articleListingContentType:
+          serializer.fromJson<String>(json['articleListingContentType']),
     );
   }
   @override
@@ -120,67 +150,82 @@ class Article extends DataClass implements Insertable<Article> {
       'id': serializer.toJson<String>(id),
       'title': serializer.toJson<String?>(title),
       'publishedDate': serializer.toJson<DateTime?>(publishedDate),
+      'articleListingContentType':
+          serializer.toJson<String>(articleListingContentType),
     };
   }
 
   Article copyWith(
           {String? id,
           Value<String?> title = const Value.absent(),
-          Value<DateTime?> publishedDate = const Value.absent()}) =>
+          Value<DateTime?> publishedDate = const Value.absent(),
+          String? articleListingContentType}) =>
       Article(
         id: id ?? this.id,
         title: title.present ? title.value : this.title,
         publishedDate:
             publishedDate.present ? publishedDate.value : this.publishedDate,
+        articleListingContentType:
+            articleListingContentType ?? this.articleListingContentType,
       );
   @override
   String toString() {
     return (StringBuffer('Article(')
           ..write('id: $id, ')
           ..write('title: $title, ')
-          ..write('publishedDate: $publishedDate')
+          ..write('publishedDate: $publishedDate, ')
+          ..write('articleListingContentType: $articleListingContentType')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, title, publishedDate);
+  int get hashCode =>
+      Object.hash(id, title, publishedDate, articleListingContentType);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Article &&
           other.id == this.id &&
           other.title == this.title &&
-          other.publishedDate == this.publishedDate);
+          other.publishedDate == this.publishedDate &&
+          other.articleListingContentType == this.articleListingContentType);
 }
 
 class ArticleEntityCompanion extends UpdateCompanion<Article> {
   final Value<String> id;
   final Value<String?> title;
   final Value<DateTime?> publishedDate;
+  final Value<String> articleListingContentType;
   final Value<int> rowid;
   const ArticleEntityCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
     this.publishedDate = const Value.absent(),
+    this.articleListingContentType = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   ArticleEntityCompanion.insert({
     required String id,
     this.title = const Value.absent(),
     this.publishedDate = const Value.absent(),
+    required String articleListingContentType,
     this.rowid = const Value.absent(),
-  }) : id = Value(id);
+  })  : id = Value(id),
+        articleListingContentType = Value(articleListingContentType);
   static Insertable<Article> custom({
     Expression<String>? id,
     Expression<String>? title,
     Expression<DateTime>? publishedDate,
+    Expression<String>? articleListingContentType,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (title != null) 'title': title,
       if (publishedDate != null) 'published_date': publishedDate,
+      if (articleListingContentType != null)
+        'article_listing_content_type': articleListingContentType,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -189,11 +234,14 @@ class ArticleEntityCompanion extends UpdateCompanion<Article> {
       {Value<String>? id,
       Value<String?>? title,
       Value<DateTime?>? publishedDate,
+      Value<String>? articleListingContentType,
       Value<int>? rowid}) {
     return ArticleEntityCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
       publishedDate: publishedDate ?? this.publishedDate,
+      articleListingContentType:
+          articleListingContentType ?? this.articleListingContentType,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -210,6 +258,10 @@ class ArticleEntityCompanion extends UpdateCompanion<Article> {
     if (publishedDate.present) {
       map['published_date'] = Variable<DateTime>(publishedDate.value);
     }
+    if (articleListingContentType.present) {
+      map['article_listing_content_type'] =
+          Variable<String>(articleListingContentType.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -222,6 +274,7 @@ class ArticleEntityCompanion extends UpdateCompanion<Article> {
           ..write('id: $id, ')
           ..write('title: $title, ')
           ..write('publishedDate: $publishedDate, ')
+          ..write('articleListingContentType: $articleListingContentType, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();

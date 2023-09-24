@@ -9,6 +9,8 @@ class ArticleEntity extends Table {
 
   DateTimeColumn get publishedDate => dateTime().nullable()();
 
+  TextColumn get articleListingContentType => text()();
+
   @override
   Set<Column> get primaryKey => {id};
 }

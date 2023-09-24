@@ -8,7 +8,7 @@ enum ArticleListingContentType {
 }
 
 extension ArticleListingContentTypeExtension on ArticleListingContentType {
-  String getName(BuildContext context) {
+  String getTitle(BuildContext context) {
     switch (this) {
       case ArticleListingContentType.mostViewed:
         return '${context.localization.homeMenuMostViewedTitle} ${context.localization.article}';
