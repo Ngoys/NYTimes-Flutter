@@ -34,7 +34,7 @@ class _SearchScreenState extends State<SearchScreen> {
     _scrollController = ScrollController()
       ..addListener(() {
         if (_scrollController.position.pixels >=
-            _scrollController.position.maxScrollExtent * 0.68) {
+            _scrollController.position.maxScrollExtent * 0.75) {
           _searchCubit.loadMoreDocumentArticle();
         }
       });
@@ -132,11 +132,23 @@ class _SearchScreenState extends State<SearchScreen> {
                           keyboardDismissBehavior:
                               ScrollViewKeyboardDismissBehavior.onDrag,
                           padding: const EdgeInsets.only(top: 12),
-                          itemCount: _searchCubit.getDocumentArticles().length,
+                          itemCount: _searchCubit.getDocumentArticles().length +
+                              (state is SearchLoadingNextPageState ? 1 : 0),
                           itemBuilder: (BuildContext context, int index) {
-                            final DocumentArticle documentArticle =
-                                _searchCubit.getDocumentArticles()[index];
-                            return DocumentArticleItemWidget(documentArticle);
+                            if (state is SearchLoadingNextPageState &&
+                                index ==
+                                    _searchCubit.getDocumentArticles().length) {
+                              return const Padding(
+                                padding: EdgeInsets.all(20),
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            } else {
+                              final DocumentArticle documentArticle =
+                                  _searchCubit.getDocumentArticles()[index];
+                              return DocumentArticleItemWidget(documentArticle);
+                            }
                           },
                         ),
                       ),
