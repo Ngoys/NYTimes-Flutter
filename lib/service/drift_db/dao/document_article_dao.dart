@@ -11,15 +11,13 @@ class DocumentArticleDao extends DatabaseAccessor<DriftDB>
     with _$DocumentArticleDaoMixin {
   DocumentArticleDao(super.db);
 
-  Future<DocumentArticleDataModel> createOrUpdate(
-      DocumentArticleDataModel model) async {
-    final DocumentArticle user =
-        await into(documentArticleEntity).insertReturning(
+  Future<void> createOrUpdate(DocumentArticleDataModel model) async {
+    await into(documentArticleEntity).insertReturning(
       model.mapToCompanion(),
       mode: InsertMode.insertOrReplace,
     );
 
-    return user.mapToModel();
+    return;
   }
 
   Future<List<DocumentArticleDataModel>> fetchDocumentArticles(

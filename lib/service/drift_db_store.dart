@@ -16,7 +16,7 @@ class DriftDBStore {
 
   final DriftDB db;
 
-  Future<ArticleDataModel> createOrUpdateArticle(
+  Future<void> createOrUpdateArticle(
     modal.Article article,
     ArticleListingContentType articleListingContentType,
   ) async =>
@@ -28,7 +28,7 @@ class DriftDBStore {
   ) async =>
       db.articleDao.fetchArticles(articleListingContentType);
 
-  Future<DocumentArticleDataModel> createOrUpdateDocumentArticle(
+  Future<void> createOrUpdateDocumentArticle(
           modal.DocumentArticle documentArticle) async =>
       db.documentArticleDao.createOrUpdate(documentArticle.mapToDataModel());
 

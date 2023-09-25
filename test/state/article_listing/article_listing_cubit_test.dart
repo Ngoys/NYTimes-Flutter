@@ -1,4 +1,3 @@
-import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
@@ -56,7 +55,7 @@ void main() {
         when(driftDBStore.fetchArticles(articleListingContentType))
             .thenAnswer((_) async => <ArticleDataModel>[]);
         when(driftDBStore.createOrUpdateArticle(any, articleListingContentType))
-            .thenAnswer((_) async => mockArticles[0].mapToDataModel());
+            .thenAnswer((_) => Future<void>.value(null));
 
         final ArticleListingCubit cubit = ArticleListingCubit(
             articleStore: articleStore, driftDBStore: driftDBStore)
@@ -81,7 +80,7 @@ void main() {
       //             .map((Article article) => article.mapToDataModel())
       //             .toList());
       //     when(driftDBStore.createOrUpdateArticle(any, articleListingContentType))
-      //         .thenAnswer((_) async => mockArticles[0].mapToDataModel());
+      //         .thenAnswer((_) => Future<void>.value(null));
 
       //     final ArticleListingCubit cubit = ArticleListingCubit(
       //         articleStore: articleStore, driftDBStore: driftDBStore)
@@ -90,7 +89,7 @@ void main() {
       //     expectLater(
       //       cubit.stream,
       //       emitsInOrder(<ArticleListingState>[
-      //         const ArticleListingLoadingState(),
+      //         ArticleListingLoadedState(mockArticles),
       //         ArticleListingLoadedState(mockArticles),
       //       ]),
       //     ).timeout(const Duration(seconds: 2));

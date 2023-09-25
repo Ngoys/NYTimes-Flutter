@@ -3,21 +3,21 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i7;
+import 'dart:async' as _i5;
 
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:nytimes/modal/article.dart' as _i10;
-import 'package:nytimes/modal/article_listing_content_type.dart' as _i11;
-import 'package:nytimes/modal/document_article.dart' as _i9;
-import 'package:nytimes/modal/failure_response.dart' as _i8;
-import 'package:nytimes/service/article_store.dart' as _i6;
+import 'package:nytimes/modal/article.dart' as _i8;
+import 'package:nytimes/modal/article_listing_content_type.dart' as _i9;
+import 'package:nytimes/modal/document_article.dart' as _i7;
+import 'package:nytimes/modal/failure_response.dart' as _i6;
+import 'package:nytimes/service/article_store.dart' as _i4;
 import 'package:nytimes/service/drift_db/data_model/article_data_model.dart'
-    as _i4;
+    as _i11;
 import 'package:nytimes/service/drift_db/data_model/document_article_data_model.dart'
-    as _i5;
+    as _i12;
 import 'package:nytimes/service/drift_db/drift_db.dart' as _i3;
-import 'package:nytimes/service/drift_db_store.dart' as _i12;
+import 'package:nytimes/service/drift_db_store.dart' as _i10;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -50,38 +50,16 @@ class _FakeDriftDB_1 extends _i1.SmartFake implements _i3.DriftDB {
         );
 }
 
-class _FakeArticleDataModel_2 extends _i1.SmartFake
-    implements _i4.ArticleDataModel {
-  _FakeArticleDataModel_2(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeDocumentArticleDataModel_3 extends _i1.SmartFake
-    implements _i5.DocumentArticleDataModel {
-  _FakeDocumentArticleDataModel_3(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [ArticleStore].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockArticleStore extends _i1.Mock implements _i6.ArticleStore {
+class MockArticleStore extends _i1.Mock implements _i4.ArticleStore {
   MockArticleStore() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i7.Future<_i2.Either<_i8.FailureResponse, List<_i9.DocumentArticle>>>
+  _i5.Future<_i2.Either<_i6.FailureResponse, List<_i7.DocumentArticle>>>
       searchDocumentArticles(
     String? keyword, {
     int? pageNumber = 1,
@@ -92,10 +70,10 @@ class MockArticleStore extends _i1.Mock implements _i6.ArticleStore {
               [keyword],
               {#pageNumber: pageNumber},
             ),
-            returnValue: _i7.Future<
-                    _i2.Either<_i8.FailureResponse,
-                        List<_i9.DocumentArticle>>>.value(
-                _FakeEither_0<_i8.FailureResponse, List<_i9.DocumentArticle>>(
+            returnValue: _i5.Future<
+                    _i2.Either<_i6.FailureResponse,
+                        List<_i7.DocumentArticle>>>.value(
+                _FakeEither_0<_i6.FailureResponse, List<_i7.DocumentArticle>>(
               this,
               Invocation.method(
                 #searchDocumentArticles,
@@ -103,32 +81,32 @@ class MockArticleStore extends _i1.Mock implements _i6.ArticleStore {
                 {#pageNumber: pageNumber},
               ),
             )),
-          ) as _i7.Future<
-              _i2.Either<_i8.FailureResponse, List<_i9.DocumentArticle>>>);
+          ) as _i5.Future<
+              _i2.Either<_i6.FailureResponse, List<_i7.DocumentArticle>>>);
   @override
-  _i7.Future<_i2.Either<_i8.FailureResponse, List<_i10.Article>>> fetchArticles(
-          _i11.ArticleListingContentType? articleListingContentType) =>
+  _i5.Future<_i2.Either<_i6.FailureResponse, List<_i8.Article>>> fetchArticles(
+          _i9.ArticleListingContentType? articleListingContentType) =>
       (super.noSuchMethod(
         Invocation.method(
           #fetchArticles,
           [articleListingContentType],
         ),
-        returnValue: _i7
-            .Future<_i2.Either<_i8.FailureResponse, List<_i10.Article>>>.value(
-            _FakeEither_0<_i8.FailureResponse, List<_i10.Article>>(
+        returnValue: _i5
+            .Future<_i2.Either<_i6.FailureResponse, List<_i8.Article>>>.value(
+            _FakeEither_0<_i6.FailureResponse, List<_i8.Article>>(
           this,
           Invocation.method(
             #fetchArticles,
             [articleListingContentType],
           ),
         )),
-      ) as _i7.Future<_i2.Either<_i8.FailureResponse, List<_i10.Article>>>);
+      ) as _i5.Future<_i2.Either<_i6.FailureResponse, List<_i8.Article>>>);
 }
 
 /// A class which mocks [DriftDBStore].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockDriftDBStore extends _i1.Mock implements _i12.DriftDBStore {
+class MockDriftDBStore extends _i1.Mock implements _i10.DriftDBStore {
   MockDriftDBStore() {
     _i1.throwOnMissingStub(this);
   }
@@ -142,9 +120,9 @@ class MockDriftDBStore extends _i1.Mock implements _i12.DriftDBStore {
         ),
       ) as _i3.DriftDB);
   @override
-  _i7.Future<_i4.ArticleDataModel> createOrUpdateArticle(
-    _i10.Article? article,
-    _i11.ArticleListingContentType? articleListingContentType,
+  _i5.Future<void> createOrUpdateArticle(
+    _i8.Article? article,
+    _i9.ArticleListingContentType? articleListingContentType,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -154,55 +132,40 @@ class MockDriftDBStore extends _i1.Mock implements _i12.DriftDBStore {
             articleListingContentType,
           ],
         ),
-        returnValue:
-            _i7.Future<_i4.ArticleDataModel>.value(_FakeArticleDataModel_2(
-          this,
-          Invocation.method(
-            #createOrUpdateArticle,
-            [
-              article,
-              articleListingContentType,
-            ],
-          ),
-        )),
-      ) as _i7.Future<_i4.ArticleDataModel>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
   @override
-  _i7.Future<List<_i4.ArticleDataModel>> fetchArticles(
-          _i11.ArticleListingContentType? articleListingContentType) =>
+  _i5.Future<List<_i11.ArticleDataModel>> fetchArticles(
+          _i9.ArticleListingContentType? articleListingContentType) =>
       (super.noSuchMethod(
         Invocation.method(
           #fetchArticles,
           [articleListingContentType],
         ),
-        returnValue: _i7.Future<List<_i4.ArticleDataModel>>.value(
-            <_i4.ArticleDataModel>[]),
-      ) as _i7.Future<List<_i4.ArticleDataModel>>);
+        returnValue: _i5.Future<List<_i11.ArticleDataModel>>.value(
+            <_i11.ArticleDataModel>[]),
+      ) as _i5.Future<List<_i11.ArticleDataModel>>);
   @override
-  _i7.Future<_i5.DocumentArticleDataModel> createOrUpdateDocumentArticle(
-          _i9.DocumentArticle? documentArticle) =>
+  _i5.Future<void> createOrUpdateDocumentArticle(
+          _i7.DocumentArticle? documentArticle) =>
       (super.noSuchMethod(
         Invocation.method(
           #createOrUpdateDocumentArticle,
           [documentArticle],
         ),
-        returnValue: _i7.Future<_i5.DocumentArticleDataModel>.value(
-            _FakeDocumentArticleDataModel_3(
-          this,
-          Invocation.method(
-            #createOrUpdateDocumentArticle,
-            [documentArticle],
-          ),
-        )),
-      ) as _i7.Future<_i5.DocumentArticleDataModel>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
   @override
-  _i7.Future<List<_i5.DocumentArticleDataModel>> fetchDocumentArticles(
+  _i5.Future<List<_i12.DocumentArticleDataModel>> fetchDocumentArticles(
           String? keyword) =>
       (super.noSuchMethod(
         Invocation.method(
           #fetchDocumentArticles,
           [keyword],
         ),
-        returnValue: _i7.Future<List<_i5.DocumentArticleDataModel>>.value(
-            <_i5.DocumentArticleDataModel>[]),
-      ) as _i7.Future<List<_i5.DocumentArticleDataModel>>);
+        returnValue: _i5.Future<List<_i12.DocumentArticleDataModel>>.value(
+            <_i12.DocumentArticleDataModel>[]),
+      ) as _i5.Future<List<_i12.DocumentArticleDataModel>>);
 }

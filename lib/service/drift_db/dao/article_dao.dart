@@ -11,17 +11,16 @@ part 'article_dao.g.dart';
 class ArticleDao extends DatabaseAccessor<DriftDB> with _$ArticleDaoMixin {
   ArticleDao(super.db);
 
-  Future<ArticleDataModel> createOrUpdate(
+  Future<void> createOrUpdate(
     ArticleDataModel model,
     ArticleListingContentType articleListingContentType,
   ) async {
-    final Article article = await into(articleEntity).insertReturning(
+    await into(articleEntity).insertReturning(
       model.mapToCompanion(
           articleListingContentType: articleListingContentType),
       mode: InsertMode.insertOrReplace,
     );
-
-    return article.mapToModel();
+    return;
   }
 
   Future<List<ArticleDataModel>> fetchArticles(
