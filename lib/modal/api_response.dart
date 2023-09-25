@@ -1,11 +1,11 @@
-class NYTimesAPIResponse<T> {
-  NYTimesAPIResponse({
+class APIResponse<T> {
+  APIResponse({
     required this.status,
     required this.copyright,
     required this.response,
   });
 
-  NYTimesAPIResponse.fromJson(
+  APIResponse.fromJson(
       Map<String, dynamic> json, T Function(dynamic) fromJson) {
     status = json['status'];
     copyright = json['copyright'];

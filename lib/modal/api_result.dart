@@ -1,13 +1,12 @@
-class NYTimesAPIResult<T> {
-  NYTimesAPIResult({
+class APIResult<T> {
+  APIResult({
     required this.status,
     required this.copyright,
     required this.numberOfResults,
     required this.results,
   });
 
-  NYTimesAPIResult.fromJson(
-      Map<String, dynamic> json, T Function(dynamic) fromJson) {
+  APIResult.fromJson(Map<String, dynamic> json, T Function(dynamic) fromJson) {
     status = json['status'];
     copyright = json['copyright'];
     numberOfResults = json['num_results'];

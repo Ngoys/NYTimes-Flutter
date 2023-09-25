@@ -38,8 +38,8 @@ class ArticleStore {
         return Left<FailureResponse, List<DocumentArticle>>(FailureResponse(
             code: response.statusCode, error: response.statusCode.toString()));
       } else {
-        final NYTimesAPIResponse<List<DocumentArticle>> apiResult =
-            NYTimesAPIResponse<List<DocumentArticle>>.fromJson(response.data,
+        final APIResponse<List<DocumentArticle>> apiResult =
+            APIResponse<List<DocumentArticle>>.fromJson(response.data,
                 (dynamic json) => (SearchResponse.fromJson(json).docs));
         return Right<FailureResponse, List<DocumentArticle>>(
             apiResult.response);
@@ -70,8 +70,8 @@ class ArticleStore {
         return Left<FailureResponse, List<Article>>(FailureResponse(
             code: response.statusCode, error: response.statusCode.toString()));
       } else {
-        final NYTimesAPIResult<List<Article>> apiResult =
-            NYTimesAPIResult<List<Article>>.fromJson(
+        final APIResult<List<Article>> apiResult =
+            APIResult<List<Article>>.fromJson(
           response.data,
           (dynamic json) => (json as List<dynamic>)
               .map((dynamic item) => Article.fromJson(item))
