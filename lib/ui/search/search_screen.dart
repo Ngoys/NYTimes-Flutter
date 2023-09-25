@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nytimes/config/stylesheet/app_font.dart';
 import 'package:nytimes/modal/document_article.dart';
+import 'package:nytimes/state/network/network_cubit.dart';
+import 'package:nytimes/state/network/network_state.dart';
 import 'package:nytimes/state/search/search_cubit.dart';
 import 'package:nytimes/state/search/search_state.dart';
 import 'package:nytimes/utils/constants.dart';
@@ -21,6 +23,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   late final SearchCubit _searchCubit;
+  late final NetworkCubit _networkCubit;
   late final ScrollController _scrollController;
   late final TextEditingController _textEditingController;
   Timer? _searchDebounce;
@@ -29,6 +32,7 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
 
+    _networkCubit = BlocProvider.of<NetworkCubit>(context);
     _searchCubit = BlocProvider.of<SearchCubit>(context);
 
     _scrollController = ScrollController()
@@ -102,42 +106,44 @@ class _SearchScreenState extends State<SearchScreen> {
             }
           },
           builder: (BuildContext context, SearchState state) {
-            return Stack(
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
-                      child: SizedBox(
-                        height: 50,
-                        child: TextField(
-                          controller: _textEditingController,
-                          autofocus: true,
-                          keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
-                            label: Text(
-                              context.localization.searchPlaceholder,
-                              style: AppFont.regular,
+            return SafeArea(
+              bottom: _networkCubit.state is NetworkConnectedState,
+              child: Stack(
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                        child: SizedBox(
+                          height: 50,
+                          child: TextField(
+                            controller: _textEditingController,
+                            autofocus: true,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              label: Text(
+                                context.localization.searchPlaceholder,
+                                style: AppFont.regular,
+                              ),
+                              border: const OutlineInputBorder(),
                             ),
-                            border: const OutlineInputBorder(),
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: Scrollbar(
-                        controller: _scrollController,
+                      Expanded(
                         child: ListView.builder(
                           controller: _scrollController,
                           keyboardDismissBehavior:
                               ScrollViewKeyboardDismissBehavior.onDrag,
                           padding: const EdgeInsets.only(top: 12),
                           itemCount: _searchCubit.getDocumentArticles().length +
-                              (state is SearchLoadingNextPageState ? 1 : 0),
+                              (_networkCubit.state is NetworkConnectedState &&
+                                      state is SearchLoadingNextPageState
+                                  ? 1
+                                  : 0),
                           itemBuilder: (BuildContext context, int index) {
-                            if (state is SearchLoadingNextPageState &&
-                                index ==
-                                    _searchCubit.getDocumentArticles().length) {
+                            if (index ==
+                                _searchCubit.getDocumentArticles().length) {
                               return const Padding(
                                 padding: EdgeInsets.all(20),
                                 child: Center(
@@ -152,14 +158,14 @@ class _SearchScreenState extends State<SearchScreen> {
                           },
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                if (state is SearchLoadingState)
-                  const Center(
-                    child: CircularProgressIndicator(),
+                    ],
                   ),
-              ],
+                  if (state is SearchLoadingState)
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                ],
+              ),
             );
           },
         ),
