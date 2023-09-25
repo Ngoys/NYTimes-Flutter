@@ -1,9 +1,6 @@
 include: package:flutter_lints/flutter.yaml
 
 analyzer:
-  exclude:
-    - test/**
-
   errors:
     todo: ignore
 

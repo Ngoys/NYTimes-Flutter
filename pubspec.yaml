@@ -27,7 +27,8 @@ dependencies:
   sqlite3_flutter_libs: ^0.5.0
   path_provider: ^2.0.0
   path: ^1.8.3
-  mockito: ^5.3.2
+  mockito: ^5.4.2
+  bloc_test: ^9.1.4
 
 dev_dependencies:
   flutter_test:
@@ -43,11 +44,6 @@ flutter:
     - assets/images/
     - assets/fonts/
   fonts:
-    - family: ReadexPro
-      fonts:
-        - asset: assets/fonts/readex_pro/ReadexPro-bold.ttf
-        - asset: assets/fonts/readex_pro/ReadexPro-Regular.ttf
-        - asset: assets/fonts/readex_pro/ReadexPro-Medium.ttf
     - family: Avenir
       fonts:
         - asset: assets/fonts/avenir/Avenir-Regular.ttf

@@ -76,8 +76,7 @@ class SearchCubit extends Cubit<SearchState> {
         _documentArticles = _documentArticles + newDocumentArticles;
 
         for (final DocumentArticle documentArticle in _documentArticles) {
-          _driftDBStore
-              .createOrUpdateDocumentArticle(documentArticle.mapToDataModel());
+          _driftDBStore.createOrUpdateDocumentArticle(documentArticle);
         }
 
         emit(SearchLoadedState(_documentArticles));

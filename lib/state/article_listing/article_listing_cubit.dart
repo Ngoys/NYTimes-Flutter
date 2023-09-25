@@ -45,7 +45,7 @@ class ArticleListingCubit extends Cubit<ArticleListingState> {
       (List<Article> articles) {
         for (final Article article in articles) {
           _driftDBStore.createOrUpdateArticle(
-              article.mapToDataModel(), articleListingContentType);
+              article, articleListingContentType);
         }
 
         emit(ArticleListingLoadedState(articles));
