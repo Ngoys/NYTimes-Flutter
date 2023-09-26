@@ -1,7 +1,9 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:nytimes/modal/article.dart';
+import 'package:nytimes/modal/failure_response.dart';
 import 'package:nytimes/modal/home_menu.dart';
 import 'package:nytimes/modal/home_menu_section.dart';
+import 'package:nytimes/utils/constants.dart';
 
 DateTime mockDateTime = DateTime(2095, 9, 24, 15, 30);
 
@@ -67,3 +69,6 @@ HomeMenuSection mockPopularSection = const HomeMenuSection(
 HomeMenuSection mockLocationSection = HomeMenuSection(
     type: HomeMenuSectionType.location,
     menus: <HomeMenu>[HomeMenu.location(mockPosition)]);
+
+FailureResponse failureResponse = FailureResponse(
+    code: notFound, error: 'notFound', errorDescription: 'notFoundDescription');

@@ -103,6 +103,33 @@ void main() {
             cubit.fetchArticleListings(articleListingContentType);
           },
         );
+
+        test(
+          'for $articleListingContentType, should emit ArticleListingErrorState on fetchArticles without Drift stored articles',
+          () {
+            when(articleStore.fetchArticles(articleListingContentType))
+                .thenAnswer((_) async =>
+                    Left<FailureResponse, List<Article>>(failureResponse));
+            when(driftDBStore.fetchArticles(articleListingContentType))
+                .thenAnswer((_) async => <ArticleDataModel>[]);
+            when(driftDBStore.createOrUpdateArticle(
+                    any, articleListingContentType))
+                .thenAnswer((_) => Future<void>.value(null));
+
+            final ArticleListingCubit cubit = ArticleListingCubit(
+                articleStore: articleStore, driftDBStore: driftDBStore);
+
+            expectLater(
+              cubit.stream,
+              emitsInOrder(<ArticleListingState>[
+                const ArticleListingLoadingState(),
+                const ArticleListingErrorState(),
+              ]),
+            ).timeout(const Duration(seconds: 2));
+
+            cubit.fetchArticleListings(articleListingContentType);
+          },
+        );
       }
     },
   );
