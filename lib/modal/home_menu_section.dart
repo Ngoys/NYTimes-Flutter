@@ -13,6 +13,17 @@ class HomeMenuSection extends Equatable {
 
   @override
   List<Object?> get props => <Object?>[type, menus];
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! HomeMenuSection) {
+      return false;
+    }
+    return type == other.type;
+  }
+
+  @override
+  int get hashCode => type.hashCode;
 }
 
 enum HomeMenuSectionType {

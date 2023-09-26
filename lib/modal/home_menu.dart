@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_equals_and_hash_code_on_mutable_classes
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nytimes/utils/context_extension.dart';
@@ -6,6 +8,17 @@ class HomeMenu {
   const HomeMenu(this.key, {this.position});
   final String key;
   final Position? position;
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! HomeMenu) {
+      return false;
+    }
+    return key == other.key;
+  }
+
+  @override
+  int get hashCode => key.hashCode;
 
   static const String _searchArticleKey = 'searchArticle';
   static const String _mostViewedKey = 'mostViewed';

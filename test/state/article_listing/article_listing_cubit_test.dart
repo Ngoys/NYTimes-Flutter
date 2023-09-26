@@ -62,8 +62,7 @@ void main() {
               .thenAnswer((_) => Future<void>.value(null));
 
           final ArticleListingCubit cubit = ArticleListingCubit(
-              articleStore: articleStore, driftDBStore: driftDBStore)
-            ..fetchArticleListings(articleListingContentType);
+              articleStore: articleStore, driftDBStore: driftDBStore);
 
           expectLater(
             cubit.stream,
@@ -72,6 +71,8 @@ void main() {
               ArticleListingLoadedState(mockArticles1),
             ]),
           ).timeout(const Duration(seconds: 2));
+
+          cubit.fetchArticleListings(articleListingContentType);
         });
 
         test(
@@ -89,8 +90,7 @@ void main() {
                 .thenAnswer((_) => Future<void>.value(null));
 
             final ArticleListingCubit cubit = ArticleListingCubit(
-                articleStore: articleStore, driftDBStore: driftDBStore)
-              ..fetchArticleListings(articleListingContentType);
+                articleStore: articleStore, driftDBStore: driftDBStore);
 
             expectLater(
               cubit.stream,
@@ -98,7 +98,9 @@ void main() {
                 ArticleListingLoadedState(mockArticles2),
                 ArticleListingLoadedState(mockArticles1),
               ]),
-            );
+            ).timeout(const Duration(seconds: 2));
+
+            cubit.fetchArticleListings(articleListingContentType);
           },
         );
       }

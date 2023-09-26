@@ -1,6 +1,20 @@
+import 'package:geolocator/geolocator.dart';
 import 'package:nytimes/modal/article.dart';
+import 'package:nytimes/modal/home_menu.dart';
+import 'package:nytimes/modal/home_menu_section.dart';
 
-DateTime mockDateTime = DateTime(2023, 9, 24, 15, 30);
+DateTime mockDateTime = DateTime(2095, 9, 24, 15, 30);
+
+Position mockPosition = Position(
+  longitude: 1,
+  latitude: 2,
+  timestamp: mockDateTime,
+  accuracy: 5,
+  altitude: 100,
+  heading: 45,
+  speed: 10,
+  speedAccuracy: 2,
+);
 
 List<Article> mockArticles1 = <Article>[
   Article(
@@ -37,3 +51,19 @@ List<Article> mockArticles2 = <Article>[
     publishedDate: mockDateTime.add(const Duration(days: 10)),
   )
 ];
+
+HomeMenuSection mockSearchSection = const HomeMenuSection(
+    type: HomeMenuSectionType.search,
+    menus: <HomeMenu>[HomeMenu.searchArticle]);
+
+HomeMenuSection mockPopularSection = const HomeMenuSection(
+    type: HomeMenuSectionType.popular,
+    menus: <HomeMenu>[
+      HomeMenu.mostViewed,
+      HomeMenu.mostShared,
+      HomeMenu.mostEmailed
+    ]);
+
+HomeMenuSection mockLocationSection = HomeMenuSection(
+    type: HomeMenuSectionType.location,
+    menus: <HomeMenu>[HomeMenu.location(mockPosition)]);
