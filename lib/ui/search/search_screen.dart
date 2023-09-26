@@ -136,14 +136,13 @@ class _SearchScreenState extends State<SearchScreen> {
                           keyboardDismissBehavior:
                               ScrollViewKeyboardDismissBehavior.onDrag,
                           padding: const EdgeInsets.only(top: 12),
-                          itemCount: _searchCubit.getDocumentArticles().length +
+                          itemCount: _searchCubit.documentArticles.length +
                               (_networkCubit.state is NetworkConnectedState &&
                                       state is SearchLoadingNextPageState
                                   ? 1
                                   : 0),
                           itemBuilder: (BuildContext context, int index) {
-                            if (index ==
-                                _searchCubit.getDocumentArticles().length) {
+                            if (index == _searchCubit.documentArticles.length) {
                               return const Padding(
                                 padding: EdgeInsets.all(20),
                                 child: Center(
@@ -152,7 +151,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               );
                             } else {
                               final DocumentArticle documentArticle =
-                                  _searchCubit.getDocumentArticles()[index];
+                                  _searchCubit.documentArticles[index];
                               return DocumentArticleItemWidget(documentArticle);
                             }
                           },

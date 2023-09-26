@@ -19,16 +19,16 @@ class SearchCubit extends Cubit<SearchState> {
   final ArticleStore _articleStore;
   final DriftDBStore _driftDBStore;
 
-  String _keyword = '';
   int _pageNumber = 1;
+
+  String _keyword = '';
+  String get keyword => _keyword;
+
   List<DocumentArticle> _documentArticles = <DocumentArticle>[];
+  List<DocumentArticle> get documentArticles => _documentArticles;
 
   Future<void> updateKeyword(String keyword) async {
     _keyword = keyword;
-  }
-
-  List<DocumentArticle> getDocumentArticles() {
-    return _documentArticles;
   }
 
   Future<void> startSearchDocumentArticle() async {
