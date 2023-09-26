@@ -68,9 +68,7 @@ class SearchCubit extends Cubit<SearchState> {
     result.fold<void>(
       (FailureResponse failureResponse) {
         _pageNumber--;
-        if (failureResponse.code == tooManyRequestError) {
-          emit(SearchErrorState(failureResponse));
-        }
+        emit(SearchErrorState(failureResponse));
       },
       (List<DocumentArticle> newDocumentArticles) {
         _documentArticles = _documentArticles + newDocumentArticles;

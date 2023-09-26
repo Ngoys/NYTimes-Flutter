@@ -109,7 +109,7 @@ void main() {
           () {
             when(articleStore.fetchArticles(articleListingContentType))
                 .thenAnswer((_) async =>
-                    Left<FailureResponse, List<Article>>(failureResponse));
+                    Left<FailureResponse, List<Article>>(mockFailureResponse));
             when(driftDBStore.fetchArticles(articleListingContentType))
                 .thenAnswer((_) async => <ArticleDataModel>[]);
             when(driftDBStore.createOrUpdateArticle(

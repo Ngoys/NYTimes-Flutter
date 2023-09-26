@@ -1,5 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:nytimes/modal/article.dart';
+import 'package:nytimes/modal/document_article.dart';
 import 'package:nytimes/modal/failure_response.dart';
 import 'package:nytimes/modal/home_menu.dart';
 import 'package:nytimes/modal/home_menu_section.dart';
@@ -54,6 +55,42 @@ List<Article> mockArticles2 = <Article>[
   )
 ];
 
+List<DocumentArticle> mockDocumentArticles1 = <DocumentArticle>[
+  DocumentArticle(
+    id: '1',
+    abstractText: 'abstractText1',
+    publishedDate: mockDateTime,
+  ),
+  DocumentArticle(
+    id: '2',
+    abstractText: 'abstractText2',
+    publishedDate: mockDateTime.add(const Duration(days: 1)),
+  ),
+  DocumentArticle(
+    id: '3',
+    abstractText: 'abstractText3',
+    publishedDate: mockDateTime.add(const Duration(days: 10)),
+  )
+];
+
+List<DocumentArticle> mockDocumentArticles2 = <DocumentArticle>[
+  DocumentArticle(
+    id: '4',
+    abstractText: 'abstractText4',
+    publishedDate: mockDateTime,
+  ),
+  DocumentArticle(
+    id: '5',
+    abstractText: 'abstractText5',
+    publishedDate: mockDateTime.add(const Duration(days: 1)),
+  ),
+  DocumentArticle(
+    id: '6',
+    abstractText: 'abstractText6',
+    publishedDate: mockDateTime.add(const Duration(days: 10)),
+  )
+];
+
 HomeMenuSection mockSearchSection = const HomeMenuSection(
     type: HomeMenuSectionType.search,
     menus: <HomeMenu>[HomeMenu.searchArticle]);
@@ -70,5 +107,5 @@ HomeMenuSection mockLocationSection = HomeMenuSection(
     type: HomeMenuSectionType.location,
     menus: <HomeMenu>[HomeMenu.location(mockPosition)]);
 
-FailureResponse failureResponse = FailureResponse(
+FailureResponse mockFailureResponse = FailureResponse(
     code: notFound, error: 'notFound', errorDescription: 'notFoundDescription');
