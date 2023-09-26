@@ -38,62 +38,70 @@ void main() {
     GetIt.instance.reset();
   });
 
-  group('', () {
-    final List<ArticleListingContentType> articleListingContentTypes = [
-      ArticleListingContentType.mostEmailed,
-      ArticleListingContentType.mostShared,
-      ArticleListingContentType.mostViewed,
-    ];
+  group(
+    '',
+    () {
+      final List<ArticleListingContentType> articleListingContentTypes = [
+        ArticleListingContentType.mostEmailed,
+        ArticleListingContentType.mostShared,
+        ArticleListingContentType.mostViewed,
+      ];
 
-    for (final ArticleListingContentType articleListingContentType
-        in articleListingContentTypes) {
-      test(
-          'for $articleListingContentType, should emit ArticleListingLoadedState on fetchArticles with no Drift stored articles',
+      for (final ArticleListingContentType articleListingContentType
+          in articleListingContentTypes) {
+        test(
+            'for $articleListingContentType, should emit ArticleListingLoadedState on fetchArticles with no Drift stored articles',
+            () {
+          when(articleStore.fetchArticles(articleListingContentType))
+              .thenAnswer((_) async =>
+                  Right<FailureResponse, List<Article>>(mockArticles1));
+          when(driftDBStore.fetchArticles(articleListingContentType))
+              .thenAnswer((_) async => <ArticleDataModel>[]);
+          when(driftDBStore.createOrUpdateArticle(
+                  any, articleListingContentType))
+              .thenAnswer((_) => Future<void>.value(null));
+
+          final ArticleListingCubit cubit = ArticleListingCubit(
+              articleStore: articleStore, driftDBStore: driftDBStore)
+            ..fetchArticleListings(articleListingContentType);
+
+          expectLater(
+            cubit.stream,
+            emitsInOrder(<ArticleListingState>[
+              const ArticleListingLoadingState(),
+              ArticleListingLoadedState(mockArticles1),
+            ]),
+          ).timeout(const Duration(seconds: 2));
+        });
+
+        test(
+          'for $articleListingContentType, should emit ArticleListingLoadedState twice on fetchArticles with Drift stored articles',
           () {
-        when(articleStore.fetchArticles(articleListingContentType)).thenAnswer(
-            (_) async => Right<FailureResponse, List<Article>>(mockArticles));
-        when(driftDBStore.fetchArticles(articleListingContentType))
-            .thenAnswer((_) async => <ArticleDataModel>[]);
-        when(driftDBStore.createOrUpdateArticle(any, articleListingContentType))
-            .thenAnswer((_) => Future<void>.value(null));
+            when(articleStore.fetchArticles(articleListingContentType))
+                .thenAnswer((_) async =>
+                    Right<FailureResponse, List<Article>>(mockArticles1));
+            when(driftDBStore.fetchArticles(articleListingContentType))
+                .thenAnswer((_) async => mockArticles2
+                    .map((Article article) => article.mapToDataModel())
+                    .toList());
+            when(driftDBStore.createOrUpdateArticle(
+                    any, articleListingContentType))
+                .thenAnswer((_) => Future<void>.value(null));
 
-        final ArticleListingCubit cubit = ArticleListingCubit(
-            articleStore: articleStore, driftDBStore: driftDBStore)
-          ..fetchArticleListings(articleListingContentType);
+            final ArticleListingCubit cubit = ArticleListingCubit(
+                articleStore: articleStore, driftDBStore: driftDBStore)
+              ..fetchArticleListings(articleListingContentType);
 
-        expectLater(
-          cubit.stream,
-          emitsInOrder(<ArticleListingState>[
-            const ArticleListingLoadingState(),
-            ArticleListingLoadedState(mockArticles),
-          ]),
-        ).timeout(const Duration(seconds: 2));
-      });
-
-      //   test(
-      //       'for $articleListingContentType, should emit ArticleListingLoadedState twice on fetchArticles with Drift stored articles',
-      //       () {
-      //     when(articleStore.fetchArticles(articleListingContentType)).thenAnswer(
-      //         (_) async => Right<FailureResponse, List<Article>>(mockArticles));
-      //     when(driftDBStore.fetchArticles(articleListingContentType)).thenAnswer(
-      //         (_) async => mockArticles
-      //             .map((Article article) => article.mapToDataModel())
-      //             .toList());
-      //     when(driftDBStore.createOrUpdateArticle(any, articleListingContentType))
-      //         .thenAnswer((_) => Future<void>.value(null));
-
-      //     final ArticleListingCubit cubit = ArticleListingCubit(
-      //         articleStore: articleStore, driftDBStore: driftDBStore)
-      //       ..fetchArticleListings(articleListingContentType);
-
-      //     expectLater(
-      //       cubit.stream,
-      //       emitsInOrder(<ArticleListingState>[
-      //         ArticleListingLoadedState(mockArticles),
-      //         ArticleListingLoadedState(mockArticles),
-      //       ]),
-      //     ).timeout(const Duration(seconds: 2));
-      //   });
-    }
-  });
+            expectLater(
+              cubit.stream,
+              emitsInOrder(<ArticleListingState>[
+                ArticleListingLoadedState(mockArticles2),
+                ArticleListingLoadedState(mockArticles1),
+              ]),
+            );
+          },
+        );
+      }
+    },
+  );
 }

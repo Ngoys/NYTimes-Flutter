@@ -1,19 +1,39 @@
 import 'package:nytimes/modal/article.dart';
 
-List<Article> mockArticles = [
+DateTime mockDateTime = DateTime(2023, 9, 24, 15, 30);
+
+List<Article> mockArticles1 = <Article>[
   Article(
     id: '1',
     title: 'title1',
-    publishedDate: DateTime.now(),
+    publishedDate: mockDateTime,
   ),
   Article(
     id: '2',
     title: 'title2',
-    publishedDate: DateTime.now().add(const Duration(days: 1)),
+    publishedDate: mockDateTime.add(const Duration(days: 1)),
   ),
   Article(
     id: '3',
     title: 'title3',
-    publishedDate: DateTime.now().add(const Duration(days: 10)),
+    publishedDate: mockDateTime.add(const Duration(days: 10)),
+  )
+];
+
+List<Article> mockArticles2 = <Article>[
+  Article(
+    id: '4',
+    title: 'title4',
+    publishedDate: mockDateTime,
+  ),
+  Article(
+    id: '5',
+    title: 'title5',
+    publishedDate: mockDateTime.add(const Duration(days: 1)),
+  ),
+  Article(
+    id: '6',
+    title: 'title6',
+    publishedDate: mockDateTime.add(const Duration(days: 10)),
   )
 ];
