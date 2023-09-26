@@ -10,6 +10,7 @@ import 'package:nytimes/state/search/search_cubit.dart';
 import 'package:nytimes/state/search/search_state.dart';
 import 'package:nytimes/utils/constants.dart';
 import 'package:nytimes/utils/context_extension.dart';
+import 'package:nytimes/widget/app_safe_area.dart';
 import 'package:nytimes/widget/document_article_item_widget.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -106,8 +107,7 @@ class _SearchScreenState extends State<SearchScreen> {
             }
           },
           builder: (BuildContext context, SearchState state) {
-            return SafeArea(
-              bottom: _networkCubit.state is NetworkConnectedState,
+            return AppSafeArea(
               child: Stack(
                 children: <Widget>[
                   Column(

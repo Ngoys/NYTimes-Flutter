@@ -5,10 +5,9 @@ import 'package:nytimes/modal/article.dart';
 import 'package:nytimes/modal/article_listing_content_type.dart';
 import 'package:nytimes/state/article_listing/article_listing_cubit.dart';
 import 'package:nytimes/state/article_listing/article_listing_state.dart';
-import 'package:nytimes/state/network/network_cubit.dart';
-import 'package:nytimes/state/network/network_state.dart';
 import 'package:nytimes/utils/constants.dart';
 import 'package:nytimes/utils/context_extension.dart';
+import 'package:nytimes/widget/app_safe_area.dart';
 import 'package:nytimes/widget/article_item_widget.dart';
 
 class ArticleListingScreen extends StatefulWidget {
@@ -22,7 +21,6 @@ class ArticleListingScreen extends StatefulWidget {
 
 class _ArticleListingScreenState extends State<ArticleListingScreen> {
   late final ArticleListingCubit _articleListingCubit;
-  late final NetworkCubit _networkCubit;
 
   late ArticleListingContentType _articleListingContentType;
 
@@ -30,7 +28,6 @@ class _ArticleListingScreenState extends State<ArticleListingScreen> {
   void initState() {
     super.initState();
 
-    _networkCubit = BlocProvider.of<NetworkCubit>(context);
     _articleListingCubit = BlocProvider.of<ArticleListingCubit>(context);
   }
 
@@ -73,8 +70,7 @@ class _ArticleListingScreenState extends State<ArticleListingScreen> {
         },
         builder: (BuildContext context, ArticleListingState state) {
           if (state is ArticleListingLoadedState) {
-            return SafeArea(
-              bottom: _networkCubit.state is NetworkConnectedState,
+            return AppSafeArea(
               child: ListView.builder(
                 padding: const EdgeInsets.only(top: 12),
                 itemCount: state.articles.length,
