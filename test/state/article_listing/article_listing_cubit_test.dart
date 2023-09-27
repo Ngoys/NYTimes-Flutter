@@ -59,7 +59,7 @@ void main() {
               .thenAnswer((_) async => <ArticleDataModel>[]);
           when(driftDBStore.createOrUpdateArticle(
                   any, articleListingContentType))
-              .thenAnswer((_) => Future<void>.value(null));
+              .thenAnswer((_) async {});
 
           final ArticleListingCubit cubit = ArticleListingCubit(
               articleStore: articleStore, driftDBStore: driftDBStore);
@@ -87,7 +87,7 @@ void main() {
                     .toList());
             when(driftDBStore.createOrUpdateArticle(
                     any, articleListingContentType))
-                .thenAnswer((_) => Future<void>.value(null));
+                .thenAnswer((_) async {});
 
             final ArticleListingCubit cubit = ArticleListingCubit(
                 articleStore: articleStore, driftDBStore: driftDBStore);
@@ -114,7 +114,7 @@ void main() {
                 .thenAnswer((_) async => <ArticleDataModel>[]);
             when(driftDBStore.createOrUpdateArticle(
                     any, articleListingContentType))
-                .thenAnswer((_) => Future<void>.value(null));
+                .thenAnswer((_) async {});
 
             final ArticleListingCubit cubit = ArticleListingCubit(
                 articleStore: articleStore, driftDBStore: driftDBStore);

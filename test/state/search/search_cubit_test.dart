@@ -6,12 +6,9 @@ import 'package:mockito/mockito.dart';
 import 'package:nytimes/modal/document_article.dart';
 import 'package:nytimes/modal/failure_response.dart';
 import 'package:nytimes/service/article_store.dart';
-import 'package:nytimes/service/drift_db/data_model/article_data_model.dart';
 import 'package:nytimes/service/drift_db/data_model/document_article_data_model.dart';
 import 'package:nytimes/service/drift_db/mapper/document_article_mapper.dart';
 import 'package:nytimes/service/drift_db_store.dart';
-import 'package:nytimes/state/article_listing/article_listing_cubit.dart';
-import 'package:nytimes/state/article_listing/article_listing_state.dart';
 import 'package:nytimes/state/search/search_cubit.dart';
 import 'package:nytimes/state/search/search_state.dart';
 
@@ -69,7 +66,7 @@ void main() {
       when(driftDBStore.fetchDocumentArticles(keyword))
           .thenAnswer((_) async => <DocumentArticleDataModel>[]);
       when(driftDBStore.createOrUpdateDocumentArticle(any))
-          .thenAnswer((_) => Future<void>.value(null));
+          .thenAnswer((_) async {});
 
       final SearchCubit cubit =
           SearchCubit(articleStore: articleStore, driftDBStore: driftDBStore)
@@ -100,7 +97,7 @@ void main() {
                   documentArticle.mapToDataModel())
               .toList());
       when(driftDBStore.createOrUpdateDocumentArticle(any))
-          .thenAnswer((_) => Future<void>.value(null));
+          .thenAnswer((_) async {});
 
       final SearchCubit cubit =
           SearchCubit(articleStore: articleStore, driftDBStore: driftDBStore)
@@ -128,7 +125,7 @@ void main() {
       when(driftDBStore.fetchDocumentArticles(keyword))
           .thenAnswer((_) async => <DocumentArticleDataModel>[]);
       when(driftDBStore.createOrUpdateDocumentArticle(any))
-          .thenAnswer((_) => Future<void>.value(null));
+          .thenAnswer((_) async {});
 
       final SearchCubit cubit =
           SearchCubit(articleStore: articleStore, driftDBStore: driftDBStore)
@@ -159,7 +156,7 @@ void main() {
                   documentArticle.mapToDataModel())
               .toList());
       when(driftDBStore.createOrUpdateDocumentArticle(any))
-          .thenAnswer((_) => Future<void>.value(null));
+          .thenAnswer((_) async {});
 
       final SearchCubit cubit =
           SearchCubit(articleStore: articleStore, driftDBStore: driftDBStore)
@@ -201,7 +198,7 @@ void main() {
       when(driftDBStore.fetchDocumentArticles(keyword))
           .thenAnswer((_) async => <DocumentArticleDataModel>[]);
       when(driftDBStore.createOrUpdateDocumentArticle(any))
-          .thenAnswer((_) => Future<void>.value(null));
+          .thenAnswer((_) async {});
 
       final SearchCubit cubit =
           SearchCubit(articleStore: articleStore, driftDBStore: driftDBStore)

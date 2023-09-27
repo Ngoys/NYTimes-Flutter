@@ -34,6 +34,7 @@ const Key appOverlayKeyOkButton = Key('AppOverlay_ActionOkKey');
 const Key appOverlayKeyAlertDialog = Key('AppOverlay_AlertDialog');
 const Key appOverlayKeyLoadingIndicator = Key('AppOverlay_LoadingIndicatorKey');
 const Key appOverlayKeyLoadingMessage = Key('AppOverlay_LoadingMessageKey');
+const Key homeScreenKey = Key('HomeScreen_Key');
 
 //----------------------------------------
 // MARK: - Navigation Parameter
