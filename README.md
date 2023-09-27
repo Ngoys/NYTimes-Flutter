@@ -1,6 +1,6 @@
 # New York Times API integration, Flutter<br />by [Shawn Ngo Yen Sern](https://www.linkedin.com/in/ngo-yensern/?originalSubdomain=my)
 
-<img width="260" alt="img_1" src="https://github.com/Ngoys/NYTimes-Flutter/assets/6831096/c5d92ebb-c744-4c06-9d62-ff05bb6291f6">
+<img width="260" alt="img_1" src="https://github.com/Ngoys/NYTimes-Flutter/assets/6831096/7230f349-6d60-4056-97da-f33cfd24a515">
 <img width="260" alt="img_3" src="https://github.com/Ngoys/NYTimes-Flutter/assets/6831096/6e60422e-3385-4d99-b74f-f9fd4ed070b0">
 <img width="260" alt="img_2" src="https://github.com/Ngoys/NYTimes-Flutter/assets/6831096/00d6c270-5a2e-445e-a84a-0da452655e26">
 
