@@ -1,4 +1,4 @@
-# New York Times API integration,<br />Flutter, by [Shawn Ngo Yen Sern](https://www.linkedin.com/in/ngo-yensern/?originalSubdomain=my)
+# New York Times API integration, Flutter, by [Shawn Ngo Yen Sern](https://www.linkedin.com/in/ngo-yensern/?originalSubdomain=my)
 
 <img width="260" alt="img_1" src="https://github.com/Ngoys/NYTimes/assets/6831096/69292ea6-f1d8-40a5-ab0f-3650b38d1639">
 <img width="260" alt="img_3" src="https://github.com/Ngoys/NYTimes/assets/6831096/e473d88d-0463-405d-bb9c-bd79e8fe7b4b">
@@ -13,7 +13,14 @@
 5. Enter `flutter pub run build_runner build --delete-conflicting-outputs` 
 6. Enter `flutter run` to run the app in iOS or Android 
 
-##
+## Feature 
 
-This project is to demostrate the ability of MVVM + C / Combine framework / finite state machine code architecture to integrate [New York Times API](https://developer.nytimes.com/apis).<br />
-It contains search pagination, unit test and a good code template to be utilize across all modules, allowing simple understanding and standardization. 
+This project has **Flutter Bloc Cubit** code architecture to integrate [New York Times API](https://developer.nytimes.com/apis).<br />
+It contains search pagination, unit test and a good code template to be utilize across all modules, allowing simple understanding and standardization. <br />
+
+1. Pagination search feature
+2. App architecture from CoreApp MultiBlocProvider, to AppOverlay, to AppContainer, to the HomeScreen UI 
+3. Bloc-based UI building with Cubit state
+4. GetIt dependency injection
+5. Drift to store offline data
+6. Unit testing  with Mockito on cubits
