@@ -1,4 +1,4 @@
-# New York Times API integration, Flutter, by [Shawn Ngo Yen Sern](https://www.linkedin.com/in/ngo-yensern/?originalSubdomain=my)
+# New York Times API integration,<br />Flutter, by [Shawn Ngo Yen Sern](https://www.linkedin.com/in/ngo-yensern/?originalSubdomain=my)
 
 <img width="260" alt="img_1" src="https://github.com/Ngoys/NYTimes/assets/6831096/69292ea6-f1d8-40a5-ab0f-3650b38d1639">
 <img width="260" alt="img_3" src="https://github.com/Ngoys/NYTimes/assets/6831096/e473d88d-0463-405d-bb9c-bd79e8fe7b4b">
