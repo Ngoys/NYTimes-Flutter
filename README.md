@@ -15,8 +15,7 @@
 
 ## Feature 
 
-This project has **Flutter Bloc Cubit** code architecture to integrate [New York Times API](https://developer.nytimes.com/apis).<br />
-It contains search pagination, unit test and a good code template to be utilize across all modules, allowing simple understanding and standardization. <br />
+This project uses **Flutter Bloc Cubit** to integrate [New York Times API](https://developer.nytimes.com/apis).<br />
 
 1. Pagination search feature
 2. App architecture from CoreApp MultiBlocProvider, to AppOverlay, to AppContainer, to the HomeScreen UI 
