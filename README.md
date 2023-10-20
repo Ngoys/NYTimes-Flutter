@@ -18,7 +18,7 @@
 This project uses **Flutter Bloc Cubit** to integrate [New York Times API](https://developer.nytimes.com/apis).<br />
 
 1. Pagination search feature
-2. App architecture from CoreApp MultiBlocProvider, to AppOverlay, to AppContainer, to the HomeScreen UI 
+2. App architecture from CoreApp > MultiBlocProvider > AppOverlay > AppContainer > the HomeScreen UI 
 3. Bloc-based UI building with Cubit state
 4. GetIt dependency injection
 5. Drift to store offline data
